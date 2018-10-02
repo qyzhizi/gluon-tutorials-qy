@@ -1,0 +1,1800 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{ssd}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{SSD -\/-\/- 使用Gluon}\label{ssd-----ux4f7fux7528gluon}
+
+这一章下面我们将实现\href{./object-detection.md}{上一章}介绍的SSD来检测野生皮卡丘。
+\includegraphics{../img/pikachu.png}
+
+\subsection{数据集}\label{ux6570ux636eux96c6}
+
+为此我们合成了一个人工数据集。我们首先使用一个开源的皮卡丘3D模型，用其生成1000张不同角度和大小的照片。然后将其随机的放在背景图片里。我们将图片打包成\texttt{rec}文件，这是一个MXNet常用的二进制数据格式。我们可以使用MXNet下的\href{https://github.com/apache/incubator-\%20mxnet/blob/master/tools/im2rec.py}{tools/im2rec.py}来将图片打包。（TODO(@mli)
+加一个教程关于如何使用im2rec）。
+
+\subsubsection{}\label{section}
+
+下载数据
+
+打包好的数据可以直接在网上下载：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{from} \PY{n+nn}{mxnet} \PY{k}{import} \PY{n}{gluon}
+        
+        \PY{n}{root\PYZus{}url} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{https://apache\PYZhy{}mxnet.s3\PYZhy{}accelerate.amazonaws.com/}\PY{l+s+s1}{\PYZsq{}}
+                    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gluon/dataset/pikachu/}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{data\PYZus{}dir} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../data/pikachu/}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{dataset} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{train.rec}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{e6bcb6ffba1ac04ff8a9b1115e650af56ee969c8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                  \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{train.idx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dcf7318b2602c06428b9988470c731621716c393}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                  \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{val.rec}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{d6c33f799b4d058e82f2cb5bd9a976f69d72d520}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}
+        \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{dataset}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n}{gluon}\PY{o}{.}\PY{n}{utils}\PY{o}{.}\PY{n}{download}\PY{p}{(}\PY{n}{root\PYZus{}url}\PY{o}{+}\PY{n}{k}\PY{p}{,} \PY{n}{data\PYZus{}dir}\PY{o}{+}\PY{n}{k}\PY{p}{,} \PY{n}{sha1\PYZus{}hash}\PY{o}{=}\PY{n}{v}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{root\PYZus{}url}\PY{o}{+}\PY{n}{k}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{data\PYZus{}dir}\PY{o}{+}\PY{n}{k}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+https://apache-mxnet.s3-accelerate.amazonaws.com/gluon/dataset/pikachu/train.rec
+../data/pikachu/train.rec
+https://apache-mxnet.s3-accelerate.amazonaws.com/gluon/dataset/pikachu/train.idx
+../data/pikachu/train.idx
+https://apache-mxnet.s3-accelerate.amazonaws.com/gluon/dataset/pikachu/val.rec
+../data/pikachu/val.rec
+
+    \end{Verbatim}
+
+    \subsubsection{读取数据集}\label{ux8bfbux53d6ux6570ux636eux96c6}
+
+我们使用\texttt{image.ImageDetIter}来读取数据。这是针对物体检测的迭代器，(Det表示Detection)。它跟\texttt{image.ImageIter}使用很类似。主要不同是它返回的标号不是单个图片标号，而是每个图片里所有物体的标号，以及其对应的边框。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{from} \PY{n+nn}{mxnet} \PY{k}{import} \PY{n}{image}
+        \PY{k+kn}{from} \PY{n+nn}{mxnet} \PY{k}{import} \PY{n}{nd}
+        
+        \PY{n}{data\PYZus{}shape} \PY{o}{=} \PY{l+m+mi}{256}
+        \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{32}
+        \PY{n}{rgb\PYZus{}mean} \PY{o}{=} \PY{n}{nd}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{123}\PY{p}{,} \PY{l+m+mi}{117}\PY{p}{,} \PY{l+m+mi}{104}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{}对待训练的每一张图片的特征，都减去全部训练集图片的特征均值}
+        
+        \PY{k}{def} \PY{n+nf}{get\PYZus{}iterators}\PY{p}{(}\PY{n}{data\PYZus{}shape}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{p}{)}\PY{p}{:}
+            \PY{n}{class\PYZus{}names} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pikachu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{c+c1}{\PYZsh{}类名称}
+            \PY{n}{num\PYZus{}class} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{class\PYZus{}names}\PY{p}{)}\PY{c+c1}{\PYZsh{}类的个数}
+            \PY{n}{train\PYZus{}iter} \PY{o}{=} \PY{n}{image}\PY{o}{.}\PY{n}{ImageDetIter}\PY{p}{(}
+                \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{n}{batch\PYZus{}size}\PY{p}{,}
+                \PY{n}{data\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{data\PYZus{}shape}\PY{p}{,} \PY{n}{data\PYZus{}shape}\PY{p}{)}\PY{p}{,}\PY{c+c1}{\PYZsh{}3*256*256}
+                \PY{n}{path\PYZus{}imgrec}\PY{o}{=}\PY{n}{data\PYZus{}dir}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{train.rec}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{n}{path\PYZus{}imgidx}\PY{o}{=}\PY{n}{data\PYZus{}dir}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{train.idx}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+                \PY{n}{mean}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+                \PY{n}{rand\PYZus{}crop}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}
+                \PY{n}{min\PYZus{}object\PYZus{}covered}\PY{o}{=}\PY{l+m+mf}{0.95}\PY{p}{,}
+                \PY{n}{max\PYZus{}attempts}\PY{o}{=}\PY{l+m+mi}{200}\PY{p}{)}
+            \PY{n}{val\PYZus{}iter} \PY{o}{=} \PY{n}{image}\PY{o}{.}\PY{n}{ImageDetIter}\PY{p}{(}
+                \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{n}{batch\PYZus{}size}\PY{p}{,}
+                \PY{n}{data\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{data\PYZus{}shape}\PY{p}{,} \PY{n}{data\PYZus{}shape}\PY{p}{)}\PY{p}{,}
+                \PY{n}{path\PYZus{}imgrec}\PY{o}{=}\PY{n}{data\PYZus{}dir}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{val.rec}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}
+                \PY{n}{mean}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+            \PY{k}{return} \PY{n}{train\PYZus{}iter}\PY{p}{,} \PY{n}{val\PYZus{}iter}\PY{p}{,} \PY{n}{class\PYZus{}names}\PY{p}{,} \PY{n}{num\PYZus{}class}
+        
+        \PY{n}{train\PYZus{}data}\PY{p}{,} \PY{n}{test\PYZus{}data}\PY{p}{,} \PY{n}{class\PYZus{}names}\PY{p}{,} \PY{n}{num\PYZus{}class} \PY{o}{=} \PY{n}{get\PYZus{}iterators}\PY{p}{(}
+            \PY{n}{data\PYZus{}shape}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/home/qy/software/anaconda3/envs/gluon/lib/python3.6/site-packages/mxnet/recordio.py:370: DeprecationWarning: The binary mode of fromstring is deprecated, as it behaves surprisingly on unicode inputs. Use frombuffer instead
+  header = header.\_replace(label=np.fromstring(s, np.float32, header.flag))
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{c+c1}{\PYZsh{}image.ImageDetIter??}
+\end{Verbatim}
+
+
+    test\_data 在这个文档中没有用到，测试使用的是新的图片
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{train\PYZus{}data}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{class\PYZus{}names}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{num\PYZus{}class}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<mxnet.image.detection.ImageDetIter object at 0x7f96f472e940>
+['pikachu']
+1
+
+    \end{Verbatim}
+
+    我们读取一个批量。可以看到标号的形状是\texttt{batch\_size\ x\ num\_object\_per\_image\ x\ 5}。这里数据里每个图片里面只有一个标号。每个标号由长为5的数组表示，第一个元素是其对用物体的标号，其中\texttt{-1}表示非法物体，仅做填充使用。后面4个元素表示边框。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{batch} \PY{o}{=} \PY{n}{train\PYZus{}data}\PY{o}{.}\PY{n}{next}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{batch}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{p}{(}\PY{n}{batch}\PY{o}{.}\PY{n}{data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{batch}\PY{o}{.}\PY{n}{data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{batch}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{batch}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{batch}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/home/qy/software/anaconda3/envs/gluon/lib/python3.6/site-packages/mxnet/recordio.py:370: DeprecationWarning: The binary mode of fromstring is deprecated, as it behaves surprisingly on unicode inputs. Use frombuffer instead
+  header = header.\_replace(label=np.fromstring(s, np.float32, header.flag))
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+DataBatch: data shapes: [(32, 3, 256, 256)] label shapes: [(32, 1, 5)]
+(1, 3, 256, 256)
+(32, 3, 256, 256)
+(32, 1, 5)
+(3, 1, 5)
+
+[[[0.         0.561691   0.35901043 0.68190587 0.5051496 ]]
+
+ [[0.         0.22858404 0.62985057 0.4480445  0.88726336]]
+
+ [[0.         0.63254344 0.31137967 0.77448833 0.4935747 ]]]
+<NDArray 3x1x5 @cpu(0)>
+
+    \end{Verbatim}
+
+    \section{展示减去均值后的图片数据}\label{ux5c55ux793aux51cfux53bbux5747ux503cux540eux7684ux56feux7247ux6570ux636e}
+
+train\_data.reset() for batch\_2 in train\_data:\\
+x = batch\_2.data{[}0{]}\\
+y = batch\_2.label{[}0{]}\\
+break print(y{[}0{]}) print(x{[}0{]}{[}0{]}{[}0:2{]})
+
+\subsubsection{注释}\label{ux6ce8ux91ca}
+
+batch.data{[}0{]} 表示一个整个ｂａｔｃｈ＝(32, 3, 256, 256)
+(batch.data{[}0{]}{[}0:1{]}) 表示第一个１个ｂａｔｃｈ＝(1, 3, 256, 256)
+
+(batch.data{[}0{]}{[}0:２{]}) 表示前２个ｂａｔｃｈ＝(1, 3, 256, 256)
+(batch.label{[}0{]}.shape)　表示整个一个batch的ｌａｂｅｌ的形状＝(32, 1,
+5) batch.label{[}0{]}{[}0:3{]}　表示ｌａｂｅｌ的前３个通道＝(3, 1, 5)
+
+关于data的是ｂａｔｃｈ关于ｌａｂｅｌ的是通道
+
+\subsubsection{}\label{section}
+
+注意： batch = train\_data.next() 是一个全局变量　一直在用
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{batch1}\PY{o}{=}\PY{n}{test\PYZus{}data}\PY{o}{.}\PY{n}{next}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{test\PYZus{}data}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{batch1}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{p}{(}\PY{n}{batch1}\PY{o}{.}\PY{n}{data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{batch1}\PY{o}{.}\PY{n}{data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{batch1}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{batch1}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/home/qy/software/anaconda3/envs/gluon/lib/python3.6/site-packages/mxnet/recordio.py:370: DeprecationWarning: The binary mode of fromstring is deprecated, as it behaves surprisingly on unicode inputs. Use frombuffer instead
+  header = header.\_replace(label=np.fromstring(s, np.float32, header.flag))
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<mxnet.image.detection.ImageDetIter object at 0x7f96a6aa47f0>
+DataBatch: data shapes: [(32, 3, 256, 256)] label shapes: [(32, 1, 5)]
+(1, 3, 256, 256)
+(32, 3, 256, 256)
+(32, 1, 5)
+
+[[[0.         0.34920424 0.3980636  0.43325877 0.5380062 ]]
+
+ [[0.         0.54850537 0.33558017 0.68133    0.5011304 ]]
+
+ [[0.         0.52884656 0.31755984 0.63678265 0.46163797]]]
+<NDArray 3x1x5 @cpu(0)>
+
+    \end{Verbatim}
+
+    \subsubsection{图示数据}\label{ux56feux793aux6570ux636e}
+
+我们画出几张图片和其对应的标号。可以看到比卡丘的角度大小位置在每张图图片都不一样。不过也注意到这个数据集是直接将二次元动漫皮卡丘跟三次元背景相结合。可能通过简单判断区域的色彩直方图就可以有效的区别是不是有我们要的物体。我们用这个简单数据集来演示SSD是如何工作的。实际中遇到的数据集通常会复杂很多。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib} \PY{k}{as} \PY{n+nn}{mpl}
+        \PY{n}{mpl}\PY{o}{.}\PY{n}{rcParams}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{figure.dpi}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{=} \PY{l+m+mi}{120}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        
+        \PY{k}{def} \PY{n+nf}{box\PYZus{}to\PYZus{}rect}\PY{p}{(}\PY{n}{box}\PY{p}{,} \PY{n}{color}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}convert an anchor box to a matplotlib rectangle\PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{n}{box} \PY{o}{=} \PY{n}{box}\PY{o}{.}\PY{n}{asnumpy}\PY{p}{(}\PY{p}{)}
+            \PY{k}{return} \PY{n}{plt}\PY{o}{.}\PY{n}{Rectangle}\PY{p}{(}
+                \PY{p}{(}\PY{n}{box}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{box}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{box}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{box}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{box}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{n}{box}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+                \PY{n}{fill}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{n}{color}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{n}{linewidth}\PY{p}{)}
+        
+        \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{figs} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
+            \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}        
+                \PY{n}{img}\PY{p}{,} \PY{n}{labels} \PY{o}{=} \PY{n}{batch}\PY{o}{.}\PY{n}{data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{i}\PY{o}{+}\PY{n}{j}\PY{p}{]}\PY{p}{,} \PY{n}{batch}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{i}\PY{o}{+}\PY{n}{j}\PY{p}{]}
+                \PY{c+c1}{\PYZsh{} (3L, 256L, 256L) =\PYZgt{} (256L, 256L, 3L)}
+                \PY{n}{img} \PY{o}{=} \PY{n}{img}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{n}{rgb\PYZus{}mean}
+                \PY{n}{img} \PY{o}{=} \PY{n}{img}\PY{o}{.}\PY{n}{clip}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{255}\PY{p}{)}\PY{o}{.}\PY{n}{asnumpy}\PY{p}{(}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{255}
+                \PY{n}{fig} \PY{o}{=} \PY{n}{figs}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+                \PY{n}{fig}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{img}\PY{p}{)}
+                \PY{k}{for} \PY{n}{label} \PY{o+ow}{in} \PY{n}{labels}\PY{p}{:}
+                    \PY{n}{rect} \PY{o}{=} \PY{n}{box\PYZus{}to\PYZus{}rect}\PY{p}{(}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}\PY{o}{*}\PY{n}{data\PYZus{}shape}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}
+                    \PY{n}{fig}\PY{o}{.}\PY{n}{add\PYZus{}patch}\PY{p}{(}\PY{n}{rect}\PY{p}{)}                    
+                \PY{n}{fig}\PY{o}{.}\PY{n}{axes}\PY{o}{.}\PY{n}{get\PYZus{}xaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}visible}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
+                \PY{n}{fig}\PY{o}{.}\PY{n}{axes}\PY{o}{.}\PY{n}{get\PYZus{}yaxis}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}visible}\PY{p}{(}\PY{k+kc}{False}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{SSD模型}\label{ssdux6a21ux578b}
+
+\subsubsection{锚框：默认的边界框}\label{ux951aux6846ux9ed8ux8ba4ux7684ux8fb9ux754cux6846}
+
+因为边框可以出现在图片中的任何位置，并且可以有任意大小。为了简化计算，SSD跟Faster
+R-CNN一样使用一些默认的边界框，或者称之为锚框（anchor
+box），做为搜索起点。具体来说，对输入的每个像素，以其为中心采样数个有不同形状和不同比例的边界框。假设输入大小是
+\(w \times h\)，
+
+\begin{itemize}
+\tightlist
+\item
+  给定大小 \(s\in (0,1]\)，那么生成的边界框形状是 \(ws \times hs\)
+\item
+  给定比例 \(r > 0\)，那么生成的边界框形状是
+  \(w\sqrt{r} \times \frac{h}{\sqrt{r}}\)
+\end{itemize}
+
+在采样的时候我们提供 \(n\) 个大小（\texttt{sizes}）和 \(m\)
+个比例（\texttt{ratios}）。为了计算简单这里不生成\(nm\)个锚框，而是\(n+m-1\)个。其中第
+\(i\) 个锚框使用
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{sizes{[}i{]}}和\texttt{ratios{[}0{]}} 如果 \(i\le n\)
+\item
+  \texttt{sizes{[}0{]}}和\texttt{ratios{[}i-n{]}} 如果 \(i>n\)
+  我们可以使用\texttt{contribe.ndarray}里的\texttt{MultiBoxPrior}来采样锚框。这里锚框通过左下角和右上角两个点来确定，而且被标准化成了区间\([0,1]\)的实数。
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k+kn}{from} \PY{n+nn}{mxnet} \PY{k}{import} \PY{n}{nd}
+        \PY{k+kn}{from} \PY{n+nn}{mxnet}\PY{n+nn}{.}\PY{n+nn}{contrib}\PY{n+nn}{.}\PY{n+nn}{ndarray} \PY{k}{import} \PY{n}{MultiBoxPrior}
+        
+        \PY{c+c1}{\PYZsh{} shape: batch x channel x height x weight}
+        \PY{n}{n} \PY{o}{=} \PY{l+m+mi}{40}
+        \PY{n}{x} \PY{o}{=} \PY{n}{nd}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{n}{shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n}{y} \PY{o}{=} \PY{n}{MultiBoxPrior}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{sizes}\PY{o}{=}\PY{p}{[}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{25}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{ratios}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{)}
+        
+        \PY{n}{boxes} \PY{o}{=} \PY{n}{y}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{boxes}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} The first anchor box centered on (20, 20)}
+        \PY{c+c1}{\PYZsh{} its format is (x\PYZus{}min, y\PYZus{}min, x\PYZus{}max, y\PYZus{}max)}
+        \PY{n}{boxes}\PY{p}{[}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{p}{:}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(40, 40, 5, 4)
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} 
+        [0.2625 0.2625 0.7625 0.7625]
+        <NDArray 4 @cpu(0)>
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} MultiBoxPrior\PY{o}{??}
+\end{Verbatim}
+
+
+    我们可以画出以\texttt{(20,20)}为中心的所有锚框：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{magenta}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{nd}\PY{o}{.}\PY{n}{ones}\PY{p}{(}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{asnumpy}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{anchors} \PY{o}{=} \PY{n}{boxes}\PY{p}{[}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{p}{:}\PY{p}{,} \PY{p}{:}\PY{p}{]} 
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{anchors}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{anchors}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{add\PYZus{}patch}\PY{p}{(}\PY{n}{box\PYZus{}to\PYZus{}rect}\PY{p}{(}\PY{n}{anchors}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{o}{*}\PY{n}{n}\PY{p}{,} \PY{n}{colors}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(5, 4)
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{预测物体类别}\label{ux9884ux6d4bux7269ux4f53ux7c7bux522b}
+
+对每一个锚框我们需要预测它是不是包含了我们感兴趣的物体，还是只是背景。这里我们使用一个\(3\times 3\)的卷积层来做预测，加上\texttt{pad=1}使用它的输出和输入一样。同时输出的通道数是\texttt{num\_anchors*(num\_classes+1)}，每个通道对应一个锚框对某个类的置信度。假设输出是\texttt{Y}，那么对应输入中第\(n\)个样本的第\((i,j)\)像素的置信值是在\texttt{Y{[}n,:,i,j{]}}里。具体来说，对于以\texttt{(i,j)}为中心的第\texttt{a}个锚框，
+- 通道 \texttt{a*(num\_class+1)} 是其只包含背景的分数 - 通道
+\texttt{a*(num\_class+1)+1+b} 是其包含第\texttt{b}个物体的分数
+我们定义个一个这样的类别分类器函数：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k+kn}{from} \PY{n+nn}{mxnet}\PY{n+nn}{.}\PY{n+nn}{gluon} \PY{k}{import} \PY{n}{nn}
+        \PY{k}{def} \PY{n+nf}{class\PYZus{}predictor}\PY{p}{(}\PY{n}{num\PYZus{}anchors}\PY{p}{,} \PY{n}{num\PYZus{}classes}\PY{p}{)}\PY{p}{:}
+            \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}return a layer to predict classes\PYZdq{}\PYZdq{}\PYZdq{}}
+            \PY{k}{return} \PY{n}{nn}\PY{o}{.}\PY{n}{Conv2D}\PY{p}{(}\PY{n}{num\PYZus{}anchors} \PY{o}{*} \PY{p}{(}\PY{n}{num\PYZus{}classes} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{padding}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        
+        \PY{n}{cls\PYZus{}pred} \PY{o}{=} \PY{n}{class\PYZus{}predictor}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+        \PY{n}{cls\PYZus{}pred}\PY{o}{.}\PY{n}{initialize}\PY{p}{(}\PY{p}{)}
+        \PY{n}{x} \PY{o}{=} \PY{n}{nd}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{)}
+        \PY{n}{y} \PY{o}{=} \PY{n}{cls\PYZus{}pred}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+        \PY{n}{y}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} (2, 55, 20, 20)
+\end{Verbatim}
+            
+    \subsubsection{预测边界框}\label{ux9884ux6d4bux8fb9ux754cux6846}
+
+因为真实的边界框可以是任意形状，我们需要预测如何从一个锚框变换成真正的边界框。这个变换可以由一个长为4的向量来描述。同上一样，我们用一个有\texttt{num\_anchors\ *\ 4}通道的卷积。假设输出是Y，那么对应输入中第
+\(n\) 个样本的第 \((i,j)\)
+像素为中心的锚框的转换在\texttt{Y{[}n,:,i,j{]}}里。具体来说，对于第\texttt{a}个锚框，它的变换在\texttt{a*4}到\texttt{a*4+3}通道里。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{def} \PY{n+nf}{box\PYZus{}predictor}\PY{p}{(}\PY{n}{num\PYZus{}anchors}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}return a layer to predict delta locations\PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{k}{return} \PY{n}{nn}\PY{o}{.}\PY{n}{Conv2D}\PY{p}{(}\PY{n}{num\PYZus{}anchors} \PY{o}{*} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{padding}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         
+         \PY{n}{box\PYZus{}pred} \PY{o}{=} \PY{n}{box\PYZus{}predictor}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+         \PY{n}{box\PYZus{}pred}\PY{o}{.}\PY{n}{initialize}\PY{p}{(}\PY{p}{)}
+         \PY{n}{x} \PY{o}{=} \PY{n}{nd}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{)}
+         \PY{n}{y} \PY{o}{=} \PY{n}{box\PYZus{}pred}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         \PY{n}{y}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} (2, 40, 20, 20)
+\end{Verbatim}
+            
+    \subsubsection{减半模块}\label{ux51cfux534aux6a21ux5757}
+
+我们定义一个卷积块，它将输入特征的长宽减半，以此来获取多尺度的预测。它由两个\texttt{Conv-BatchNorm-\ Relu}组成，我们使用填充为1的\(3\times 3\)卷积使得输入和输入有同样的长宽，然后再通过跨度为2的最大池化层将长宽减半。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{down\PYZus{}sample}\PY{p}{(}\PY{n}{num\PYZus{}filters}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}stack two Conv\PYZhy{}BatchNorm\PYZhy{}Relu blocks and then a pooling layer}
+         \PY{l+s+sd}{    to halve the feature size\PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{out} \PY{o}{=} \PY{n}{nn}\PY{o}{.}\PY{n}{HybridSequential}\PY{p}{(}\PY{p}{)}
+             \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{out}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{nn}\PY{o}{.}\PY{n}{Conv2D}\PY{p}{(}\PY{n}{num\PYZus{}filters}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{strides}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{padding}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{out}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{nn}\PY{o}{.}\PY{n}{BatchNorm}\PY{p}{(}\PY{n}{in\PYZus{}channels}\PY{o}{=}\PY{n}{num\PYZus{}filters}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{out}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{nn}\PY{o}{.}\PY{n}{Activation}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+             \PY{n}{out}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{nn}\PY{o}{.}\PY{n}{MaxPool2D}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)} 
+             \PY{k}{return} \PY{n}{out}
+         
+         \PY{n}{blk} \PY{o}{=} \PY{n}{down\PYZus{}sample}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+         \PY{n}{blk}\PY{o}{.}\PY{n}{initialize}\PY{p}{(}\PY{p}{)}
+         \PY{n}{x} \PY{o}{=} \PY{n}{nd}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{)}
+         \PY{n}{y} \PY{o}{=} \PY{n}{blk}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         \PY{n}{y}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} (2, 10, 10, 10)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} nn.BatchNorm\PY{o}{??}
+\end{Verbatim}
+
+
+    \subsubsection{合并来自不同层的预测输出}\label{ux5408ux5e76ux6765ux81eaux4e0dux540cux5c42ux7684ux9884ux6d4bux8f93ux51fa}
+
+前面我们提到过SSD的一个重要性质是它会在多个层同时做预测。每个层由于长宽和锚框选择不一样，导致输出的数据形状会不一样。这里我们用物体类别预测作为样例，边框预测是类似的。
+我们首先创建一个特定大小的输入，然后对它输出类别预测。然后对输入减半，再输出类别预测。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{x} \PY{o}{=} \PY{n}{nd}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         
+         \PY{n}{cls\PYZus{}pred1} \PY{o}{=} \PY{n}{class\PYZus{}predictor}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         \PY{n}{cls\PYZus{}pred1}\PY{o}{.}\PY{n}{initialize}\PY{p}{(}\PY{p}{)}
+         \PY{n}{y1} \PY{o}{=} \PY{n}{cls\PYZus{}pred1}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class prediction 1:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y1}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         
+         \PY{n}{ds} \PY{o}{=} \PY{n}{down\PYZus{}sample}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{)}
+         \PY{n}{ds}\PY{o}{.}\PY{n}{initialize}\PY{p}{(}\PY{p}{)}
+         \PY{n}{x} \PY{o}{=} \PY{n}{ds}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         
+         \PY{n}{cls\PYZus{}pred2} \PY{o}{=} \PY{n}{class\PYZus{}predictor}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+         \PY{n}{cls\PYZus{}pred2}\PY{o}{.}\PY{n}{initialize}\PY{p}{(}\PY{p}{)}
+         \PY{n}{y2} \PY{o}{=} \PY{n}{cls\PYZus{}pred2}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class prediction 2:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y2}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+x: (2, 8, 20, 20)
+Class prediction 1: (2, 55, 20, 20)
+x: (2, 16, 10, 10)
+Class prediction 2: (2, 33, 10, 10)
+
+    \end{Verbatim}
+
+    可以看到\texttt{y1}和\texttt{y2}形状不同。为了之后处理简单，我们将不同层的输入合并成一个输出。首先我们将通道移到最后的维度，然后将其展成2D数组。因为第一个维度是样本个数，所以不同输出之间是不变，我们可以将所有输出在第二个维度上拼接起来。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{def} \PY{n+nf}{flatten\PYZus{}prediction}\PY{p}{(}\PY{n}{pred}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{pred}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{n}{axes}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{concat\PYZus{}predictions}\PY{p}{(}\PY{n}{preds}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{nd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{o}{*}\PY{n}{preds}\PY{p}{,} \PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         
+         \PY{n}{flat\PYZus{}y1} \PY{o}{=} \PY{n}{flatten\PYZus{}prediction}\PY{p}{(}\PY{n}{y1}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Flatten class prediction 1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{flat\PYZus{}y1}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n}{flat\PYZus{}y2} \PY{o}{=} \PY{n}{flatten\PYZus{}prediction}\PY{p}{(}\PY{n}{y2}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Flatten class prediction 2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{flat\PYZus{}y2}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n}{y} \PY{o}{=} \PY{n}{concat\PYZus{}predictions}\PY{p}{(}\PY{p}{[}\PY{n}{flat\PYZus{}y1}\PY{p}{,} \PY{n}{flat\PYZus{}y2}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Concat class predictions}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Flatten class prediction 1 (2, 22000)
+Flatten class prediction 2 (2, 3300)
+Concat class predictions (2, 25300)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{c+c1}{\PYZsh{}x5 = nd.random.uniform(shape=(1, 3, 5, 5))}
+         \PY{c+c1}{\PYZsh{}print(x5)}
+         \PY{c+c1}{\PYZsh{}print(x5.transpose(axes=(0,2,3,1)))}
+         \PY{c+c1}{\PYZsh{}print(x5.transpose(axes=(0,2,3,1)).flatten())}
+\end{Verbatim}
+
+
+    \subsubsection{主体网络}\label{ux4e3bux4f53ux7f51ux7edc}
+
+主体网络用来从原始像素抽取特征。通常前面介绍的用来图片分类的卷积神经网络，例如ResNet，都可以用来作为主体网络。这里为了示范，我们简单叠加几个减半模块作为主体网络。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{k}{def} \PY{n+nf}{body}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n}{out} \PY{o}{=} \PY{n}{nn}\PY{o}{.}\PY{n}{HybridSequential}\PY{p}{(}\PY{p}{)}
+             \PY{k}{for} \PY{n}{nfilters} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{64}\PY{p}{]}\PY{p}{:}
+                 \PY{n}{out}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{down\PYZus{}sample}\PY{p}{(}\PY{n}{nfilters}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{n}{out}
+         
+         \PY{n}{bnet} \PY{o}{=} \PY{n}{body}\PY{p}{(}\PY{p}{)}
+         \PY{n}{bnet}\PY{o}{.}\PY{n}{initialize}\PY{p}{(}\PY{p}{)}
+         \PY{n}{x} \PY{o}{=} \PY{n}{nd}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{n}{shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{256}\PY{p}{,}\PY{l+m+mi}{256}\PY{p}{)}\PY{p}{)}
+         \PY{n}{y} \PY{o}{=} \PY{n}{bnet}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         \PY{n}{y}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} (2, 64, 32, 32)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} nn.HybridSequential\PY{o}{??}
+\end{Verbatim}
+
+
+    \subsubsection{创建一个玩具SSD模型}\label{ux521bux5efaux4e00ux4e2aux73a9ux5177ssdux6a21ux578b}
+
+现在我们可以创建一个玩具SSD模型了。我们称之为玩具是因为这个网络不管是层数还是锚框个数都比较小，仅仅适合之后我们之后使用的一个小数据集。但这个模型不会影响我们介绍SSD。
+这个网络包含四块。主体网络，三个减半模块，以及五个物体类别和边框预测模块。其中预测分别应用在在主体网络输出，减半模块输出，和最后的全局池化层上。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k}{def} \PY{n+nf}{toy\PYZus{}ssd\PYZus{}model}\PY{p}{(}\PY{n}{num\PYZus{}anchors}\PY{p}{,} \PY{n}{num\PYZus{}classes}\PY{p}{)}\PY{p}{:}
+             \PY{n}{downsamplers} \PY{o}{=} \PY{n}{nn}\PY{o}{.}\PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+             \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{downsamplers}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{down\PYZus{}sample}\PY{p}{(}\PY{l+m+mi}{128}\PY{p}{)}\PY{p}{)}
+                 
+             \PY{n}{class\PYZus{}predictors} \PY{o}{=} \PY{n}{nn}\PY{o}{.}\PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+             \PY{n}{box\PYZus{}predictors} \PY{o}{=} \PY{n}{nn}\PY{o}{.}\PY{n}{Sequential}\PY{p}{(}\PY{p}{)}    
+             \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{class\PYZus{}predictors}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{class\PYZus{}predictor}\PY{p}{(}\PY{n}{num\PYZus{}anchors}\PY{p}{,} \PY{n}{num\PYZus{}classes}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{box\PYZus{}predictors}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{box\PYZus{}predictor}\PY{p}{(}\PY{n}{num\PYZus{}anchors}\PY{p}{)}\PY{p}{)}
+         
+             \PY{n}{model} \PY{o}{=} \PY{n}{nn}\PY{o}{.}\PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+             \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{body}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{downsamplers}\PY{p}{,} \PY{n}{class\PYZus{}predictors}\PY{p}{,} \PY{n}{box\PYZus{}predictors}\PY{p}{)}
+             \PY{k}{return} \PY{n}{model}
+\end{Verbatim}
+
+
+    \subsubsection{计算预测}\label{ux8ba1ux7b97ux9884ux6d4b}
+
+给定模型和每层预测输出使用的锚框大小和形状，我们可以定义前向函数。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k}{def} \PY{n+nf}{toy\PYZus{}ssd\PYZus{}forward}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{model}\PY{p}{,} \PY{n}{sizes}\PY{p}{,} \PY{n}{ratios}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}    
+             \PY{n}{body}\PY{p}{,} \PY{n}{downsamplers}\PY{p}{,} \PY{n}{class\PYZus{}predictors}\PY{p}{,} \PY{n}{box\PYZus{}predictors} \PY{o}{=} \PY{n}{model}
+             \PY{n}{anchors}\PY{p}{,} \PY{n}{class\PYZus{}preds}\PY{p}{,} \PY{n}{box\PYZus{}preds} \PY{o}{=} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}
+             \PY{c+c1}{\PYZsh{} feature extraction    }
+             \PY{n}{x} \PY{o}{=} \PY{n}{body}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{c+c1}{\PYZsh{}feature extraction完毕}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{} predict}
+                 \PY{n}{anchors}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{MultiBoxPrior}\PY{p}{(}
+                     \PY{n}{x}\PY{p}{,} \PY{n}{sizes}\PY{o}{=}\PY{n}{sizes}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{ratios}\PY{o}{=}\PY{n}{ratios}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{class\PYZus{}preds}\PY{o}{.}\PY{n}{append}\PY{p}{(}
+                     \PY{n}{flatten\PYZus{}prediction}\PY{p}{(}\PY{n}{class\PYZus{}predictors}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{box\PYZus{}preds}\PY{o}{.}\PY{n}{append}\PY{p}{(}
+                     \PY{n}{flatten\PYZus{}prediction}\PY{p}{(}\PY{n}{box\PYZus{}predictors}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                 \PY{k}{if} \PY{n}{verbose}\PY{p}{:}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Predict scale}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{n}{x}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{with}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                           \PY{n}{anchors}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{anchors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} down sample}
+                 \PY{k}{if} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{l+m+mi}{3}\PY{p}{:}
+                     \PY{n}{x} \PY{o}{=} \PY{n}{downsamplers}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+                 \PY{k}{elif} \PY{n}{i} \PY{o}{==} \PY{l+m+mi}{3}\PY{p}{:}
+                     \PY{n}{x} \PY{o}{=} \PY{n}{nd}\PY{o}{.}\PY{n}{Pooling}\PY{p}{(}
+                         \PY{n}{x}\PY{p}{,} \PY{n}{global\PYZus{}pool}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{pool\PYZus{}type}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                         \PY{n}{kernel}\PY{o}{=}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} concat data}
+             \PY{k}{return} \PY{p}{(}\PY{n}{concat\PYZus{}predictions}\PY{p}{(}\PY{n}{anchors}\PY{p}{)}\PY{p}{,}
+                     \PY{n}{concat\PYZus{}predictions}\PY{p}{(}\PY{n}{class\PYZus{}preds}\PY{p}{)}\PY{p}{,}
+                     \PY{n}{concat\PYZus{}predictions}\PY{p}{(}\PY{n}{box\PYZus{}preds}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{ratios11} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{5}
+         \PY{n}{ratios11}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}32}]:} [[1, 2, 0.5], [1, 2, 0.5], [1, 2, 0.5], [1, 2, 0.5], [1, 2, 0.5]]
+\end{Verbatim}
+            
+    \subsubsection{完整的模型}\label{ux5b8cux6574ux7684ux6a21ux578b}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k+kn}{from} \PY{n+nn}{mxnet} \PY{k}{import} \PY{n}{gluon}
+         \PY{k}{class} \PY{n+nc}{ToySSD}\PY{p}{(}\PY{n}{gluon}\PY{o}{.}\PY{n}{Block}\PY{p}{)}\PY{p}{:}
+             \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{num\PYZus{}classes}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{super}\PY{p}{(}\PY{n}{ToySSD}\PY{p}{,} \PY{n+nb+bp}{self}\PY{p}{)}\PY{o}{.}\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} anchor box sizes and ratios for 5 feature scales 这里有５个size和5个ratios，因为有５个不同大小的主网络}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sizes} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{o}{.}\PY{l+m+mi}{2}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{272}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{o}{.}\PY{l+m+mi}{37}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{447}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{o}{.}\PY{l+m+mi}{54}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{619}\PY{p}{]}\PY{p}{,} 
+                               \PY{p}{[}\PY{o}{.}\PY{l+m+mi}{71}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{79}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{o}{.}\PY{l+m+mi}{88}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{961}\PY{p}{]}\PY{p}{]}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ratios} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{5}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{num\PYZus{}classes} \PY{o}{=} \PY{n}{num\PYZus{}classes}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{verbose} \PY{o}{=} \PY{n}{verbose}
+                 \PY{n}{num\PYZus{}anchors} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sizes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ratios}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+                 \PY{c+c1}{\PYZsh{} use name\PYZus{}scope to guard the names}
+                 \PY{k}{with} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{name\PYZus{}scope}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                     \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model} \PY{o}{=} \PY{n}{toy\PYZus{}ssd\PYZus{}model}\PY{p}{(}\PY{n}{num\PYZus{}anchors}\PY{p}{,} \PY{n}{num\PYZus{}classes}\PY{p}{)}
+         
+             \PY{k}{def} \PY{n+nf}{forward}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{anchors}\PY{p}{,} \PY{n}{class\PYZus{}preds}\PY{p}{,} \PY{n}{box\PYZus{}preds} \PY{o}{=} \PY{n}{toy\PYZus{}ssd\PYZus{}forward}\PY{p}{(}
+                     \PY{n}{x}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{sizes}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ratios}\PY{p}{,} 
+                     \PY{n}{verbose}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{verbose}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} it is better to have class predictions reshaped for softmax computation       }
+                 \PY{n}{class\PYZus{}preds} \PY{o}{=} \PY{n}{class\PYZus{}preds}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{num\PYZus{}classes}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+                 \PY{k}{return} \PY{n}{anchors}\PY{p}{,} \PY{n}{class\PYZus{}preds}\PY{p}{,} \PY{n}{box\PYZus{}preds}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{sizes\PYZus{}test} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{o}{.}\PY{l+m+mi}{2}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{272}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{o}{.}\PY{l+m+mi}{37}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{447}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{o}{.}\PY{l+m+mi}{54}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{619}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{o}{.}\PY{l+m+mi}{71}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{79}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{o}{.}\PY{l+m+mi}{88}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{961}\PY{p}{]}\PY{p}{]}
+         \PY{n}{ratios\PYZus{}test} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{5}
+         \PY{n}{num\PYZus{}anchors\PYZus{}test} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{sizes\PYZus{}test}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n+nb}{len}\PY{p}{(}\PY{n}{ratios\PYZus{}test}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+         \PY{n+nb}{print} \PY{p}{(}\PY{n}{num\PYZus{}anchors\PYZus{}test}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{sizes\PYZus{}test}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{ratios\PYZus{}test}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                               
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+4
+2
+3
+
+    \end{Verbatim}
+
+    我们看一下输入图片的形状是如何改变的，已经输出的形状。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{net} \PY{o}{=} \PY{n}{ToySSD}\PY{p}{(}\PY{n}{num\PYZus{}classes}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{net}\PY{o}{.}\PY{n}{initialize}\PY{p}{(}\PY{p}{)}
+         \PY{n}{x} \PY{o}{=} \PY{n}{batch}\PY{o}{.}\PY{n}{data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Input:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n}{anchors}\PY{p}{,} \PY{n}{class\PYZus{}preds}\PY{p}{,} \PY{n}{box\PYZus{}preds} \PY{o}{=} \PY{n}{net}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Output achors:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{anchors}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Output class predictions:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{class\PYZus{}preds}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Output box predictions:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{box\PYZus{}preds}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Input: (1, 3, 256, 256)
+Predict scale 0 (1, 64, 32, 32) with 4096 anchors
+Predict scale 1 (1, 128, 16, 16) with 1024 anchors
+Predict scale 2 (1, 128, 8, 8) with 256 anchors
+Predict scale 3 (1, 128, 4, 4) with 64 anchors
+Predict scale 4 (1, 128, 1, 1) with 4 anchors
+Output achors: (1, 5444, 4)
+Output class predictions: (1, 5444, 3)
+Output box predictions: (1, 21776)
+
+    \end{Verbatim}
+
+    \subsubsection{输出注解：}\label{ux8f93ux51faux6ce8ux89e3}
+
+因为x=batch.data{[}0{]}{[}0:1{]}
+它的大小为一个ｂａｔｃｈ　所以后面跟的例子都是一个ｂａｔｃｈ，batch=1
+实际训练的时候ｂａｔｃｈ＝３２
+
+在采样的时候我们提供 nn 个大小（sizes）和 mm
+个比例（ratios）。为了计算简单这里不生成 nmnm 个锚框，而是 n+m−1n+m−1
+个。
+
+anchor box sizes and ratios for 5 feature scales
+这里有５个size和5个ratios，因为有５个不同大小的主网络
+
+Input: (1, 3, 256, 256)
+
+Predict scale 0 (1, 64, 32, 32) with 4096 anchors
+
+Predict scale 1 (1, 128, 16, 16) with 1024 anchors
+
+Predict scale 2 (1, 128, 8, 8) with 256 anchors
+
+Predict scale 3 (1, 128, 4, 4) with 64 anchors
+
+Predict scale 4 (1, 128, 1, 1) with 4 anchors Output achors: (1, 5444,
+4)　每一个achors用４个向量表示
+
+Output class predictions: (1, 5444, 3)　３表示３个类别
+
+Output box predictions: (1, 21776)　５４４４４＊４＝２１７７６
+
+\subsection{训练}\label{ux8badux7ec3}
+
+之前的教程我们主要是关注分类。对于分类的预测结果和真实的标号，我们通过交叉熵来计算他们的差异。但物体检测里我们需要预测边框。这里我们先引入一个概率来描述两个边框的距离。
+\#\#\# IoU：交集除并集
+
+我们知道判断两个集合的相似度最常用的衡量叫做Jaccard距离，给定集合 \(A\)
+和 \(B\)，它的定义是
+
+\[J(A,B) =
+\frac{|A\cap B|}{| A \cup B|}\]
+
+边框可以看成是像素的集合，我们可以类似的定义它。这个标准通常被称之为
+Intersection over Union (IoU)。
+
+\begin{figure}
+\centering
+\includegraphics{../img/iou.svg}
+\caption{}
+\end{figure}
+
+大的值表示两个边框很相似，而小的值则表示不相似。
+
+\subsubsection{损失函数}\label{ux635fux5931ux51fdux6570}
+
+虽然每张图片里面通常只有几个标注的边框，但SSD会生成大量的锚框。可以想象很多锚框都不会框住感兴趣的物体，就是说跟任何对应感兴趣物体的表框的IoU都小于某个阈值。这样就会产生大量的负类锚框，或者说对应标号为0的锚框。对于这类锚框有两点要考虑的：
+1. 边框预测的损失函数不应该包括负类锚框，因为它们并没有对应的真实边框 1.
+因为负类锚框数目可能远多于其他，我们可以只保留其中的一些。而且是保留那些目前预测最不确信它是负类的，就是对类0预测值排序，选取数值最小的哪一些困难的负类锚框。
+我们可以使用\texttt{MultiBoxTarget}来完成上面这两个操作。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{k+kn}{from} \PY{n+nn}{mxnet}\PY{n+nn}{.}\PY{n+nn}{contrib}\PY{n+nn}{.}\PY{n+nn}{ndarray} \PY{k}{import} \PY{n}{MultiBoxTarget}
+         \PY{k}{def} \PY{n+nf}{training\PYZus{}targets}\PY{p}{(}\PY{n}{anchors}\PY{p}{,} \PY{n}{class\PYZus{}preds}\PY{p}{,} \PY{n}{labels}\PY{p}{)}\PY{p}{:}
+             \PY{n}{class\PYZus{}preds} \PY{o}{=} \PY{n}{class\PYZus{}preds}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{n}{axes}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}print(class\PYZus{}preds.shape)}
+             \PY{k}{return} \PY{n}{MultiBoxTarget}\PY{p}{(}\PY{n}{anchors}\PY{p}{,} \PY{n}{labels}\PY{p}{,} \PY{n}{class\PYZus{}preds}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{out} \PY{o}{=} \PY{n}{training\PYZus{}targets}\PY{p}{(}\PY{n}{anchors}\PY{p}{,} \PY{n}{class\PYZus{}preds}\PY{p}{,} \PY{n}{batch}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} 
+         \PY{n}{out}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:} [
+          [[0. 0. 0. {\ldots} 0. 0. 0.]]
+          <NDArray 1x21776 @cpu(0)>, 
+          [[0. 0. 0. {\ldots} 0. 0. 0.]]
+          <NDArray 1x21776 @cpu(0)>, 
+          [[0. 0. 0. {\ldots} 0. 0. 0.]]
+          <NDArray 1x5444 @cpu(0)>]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{box\PYZus{}target\PYZus{}1}\PY{p}{,} \PY{n}{box\PYZus{}mask\PYZus{}1}\PY{p}{,} \PY{n}{cls\PYZus{}target\PYZus{}1}\PY{o}{=}\PY{n}{training\PYZus{}targets}\PY{p}{(}\PY{n}{anchors}\PY{p}{,} \PY{n}{class\PYZus{}preds}\PY{p}{,} \PY{n}{batch}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{cls\PYZus{}target\PYZus{}1}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{4}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}23}]:} 
+         [0. 0. 0. 0.]
+         <NDArray 4 @cpu(0)>
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{class\PYZus{}preds}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+[0.00686599 0.07400041 0.0004015 ]
+<NDArray 3 @cpu(0)>
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{out}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{out}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+[14.]
+<NDArray 1 @cpu(0)>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}20}]:} 
+         [56.]
+         <NDArray 1 @cpu(0)>
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}59}]:} \PY{n}{batch}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}59}]:} 
+         [[[ 0.          0.63489324  0.23164183  0.84697556  0.5392034 ]
+           [-1.         -1.         -1.         -1.         -1.        ]
+           [-1.         -1.         -1.         -1.         -1.        ]]]
+         <NDArray 1x3x5 @cpu(0)>
+\end{Verbatim}
+            
+    \subsubsection{注解：}\label{ux6ce8ux89e3}
+
+training\_targets 添加　 \#print(class\_preds.shape)　输出为　(1, 3,
+5444)　 training\_targets　函数只是对　class\_preds 做了处理　
+
+NDArray 1x21776 @cpu(0)\textgreater{}, \#５４４４＊４＝２１７７６　\#
+预测的边框跟真实边框的偏移
+
+NDArray 1x21776 @cpu(0)\textgreater{}, \#５４４４＊４＝２１７７６
+\#lablels 输出　这是一个掩码用来遮掩不需要的负类锚框
+
+NDArray 1x5444 @cpu(0)\textgreater{}{]}
+\#class\_preds进过class\_preds.transpose(axes=(0,2,1))　转换后的形状是（１，３，５４４４），经过MultiBoxTarget后变成（1,5444),是预测的真实标号
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}56}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{batch}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{batch}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+[[[ 0.          0.63489324  0.23164183  0.84697556  0.5392034 ]
+  [-1.         -1.         -1.         -1.         -1.        ]
+  [-1.         -1.         -1.         -1.         -1.        ]]
+
+ [[ 0.          0.2738291   0.22898744  0.40896568  0.48224777]
+  [-1.         -1.         -1.         -1.         -1.        ]
+  [-1.         -1.         -1.         -1.         -1.        ]]
+
+ [[ 0.          0.46978655  0.29605928  0.8279264   0.90313476]
+  [-1.         -1.         -1.         -1.         -1.        ]
+  [-1.         -1.         -1.         -1.         -1.        ]]]
+<NDArray 3x3x5 @cpu(0)>
+(32, 3, 5)
+
+    \end{Verbatim}
+
+    它返回三个\texttt{NDArray}，分别是
+
+预测的边框(预设边框）跟真实边框的偏移，大小是\texttt{batch\_size\ x\ (num\_anchors*4)}
+用来遮掩不需要的负类锚框的掩码，大小跟上面一致
+
+锚框的真实的标号，大小是\texttt{batch\_size\ x\ num\_anchors}
+我们可以计算这次只选中了多少个锚框进入损失函数：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{out}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{4}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}22}]:} 
+         [14.]
+         <NDArray 1 @cpu(0)>
+\end{Verbatim}
+            
+    然后我们可以定义需要的损失函数了。
+
+对于分类问题，最常用的损失函数是之前一直使用的交叉熵。这里我们定义一个类似于交叉熵的损失，不同于交叉熵的定义
+\(\log(p_j)\)，这里 \(j\) 是真实的类别，且 \(p_j\)
+是对于的预测概率。我们使用一个被称之为关注损失的函数，给定正的\(\gamma\)和\(\alpha\)，它的定义是
+
+\[ - \alpha
+(1-p_j)^{\gamma} \log(p_j) \]
+下图我们演示不同\(\gamma\)导致的变化。可以看到，增加\(\gamma\)可以使得对正类预测值比较大时损失变小。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         
+         \PY{k}{def} \PY{n+nf}{focal\PYZus{}loss}\PY{p}{(}\PY{n}{gamma}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{n}{gamma}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         
+         \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{o}{.}\PY{l+m+mi}{01}\PY{p}{)}
+         \PY{n}{gammas} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{25}\PY{p}{,}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
+         \PY{k}{for} \PY{n}{i}\PY{p}{,}\PY{n}{g} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{gammas}\PY{p}{)}\PY{p}{:}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{focal\PYZus{}loss}\PY{p}{(}\PY{n}{g}\PY{p}{,}\PY{n}{x}\PY{p}{)}\PY{p}{,} \PY{n}{colors}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gamma=}\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{g}\PY{p}{)} \PY{k}{for} \PY{n}{g} \PY{o+ow}{in} \PY{n}{gammas}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_56_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    这个自定义的损失函数可以简单通过继承\texttt{gluon.loss.Loss}来实现。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{k}{class} \PY{n+nc}{FocalLoss}\PY{p}{(}\PY{n}{gluon}\PY{o}{.}\PY{n}{loss}\PY{o}{.}\PY{n}{Loss}\PY{p}{)}\PY{p}{:}
+             \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.25}\PY{p}{,} \PY{n}{gamma}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{batch\PYZus{}axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{super}\PY{p}{(}\PY{n}{FocalLoss}\PY{p}{,} \PY{n+nb+bp}{self}\PY{p}{)}\PY{o}{.}\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{k+kc}{None}\PY{p}{,} \PY{n}{batch\PYZus{}axis}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}axis} \PY{o}{=} \PY{n}{axis}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}alpha} \PY{o}{=} \PY{n}{alpha}
+                 \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}gamma} \PY{o}{=} \PY{n}{gamma}
+         
+             \PY{k}{def} \PY{n+nf}{hybrid\PYZus{}forward}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{F}\PY{p}{,} \PY{n}{output}\PY{p}{,} \PY{n}{label}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{output} \PY{o}{=} \PY{n}{F}\PY{o}{.}\PY{n}{softmax}\PY{p}{(}\PY{n}{output}\PY{p}{)}
+                 \PY{n}{pj} \PY{o}{=} \PY{n}{output}\PY{o}{.}\PY{n}{pick}\PY{p}{(}\PY{n}{label}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}axis}\PY{p}{,} \PY{n}{keepdims}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+                 \PY{n}{loss} \PY{o}{=} \PY{o}{\PYZhy{}} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}alpha} \PY{o}{*} \PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{pj}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}gamma}\PY{p}{)} \PY{o}{*} \PY{n}{pj}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{p}{)}
+                 \PY{k}{return} \PY{n}{loss}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}batch\PYZus{}axis}\PY{p}{,} \PY{n}{exclude}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         
+         \PY{n}{cls\PYZus{}loss} \PY{o}{=} \PY{n}{FocalLoss}\PY{p}{(}\PY{p}{)}
+         \PY{n}{cls\PYZus{}loss}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}34}]:} FocalLoss(batch\_axis=0, w=None)
+\end{Verbatim}
+            
+    对于边框的预测是一个回归问题。通常可以选择平方损失函数（L2损失）\(f(x)=x^2\)。但这个损失对于比较大的误差的惩罚很高。我们可以采用稍微缓和一点绝对损失函数（L1损失）\(f(x)=|x|\)，它是随着误差线性增长，而不是平方增长。但这个函数在0点处导数不唯一，因此可能会影响收敛。一个通常的解决办法是在0点附近使用平方函数使得它更加平滑。它被称之为平滑L1损失函数。它通过一个参数\(\sigma\)来控制平滑的区域：
+\[
+f(x) =
+    \begin{cases}
+    (\sigma x)^2/2,& \text{if }x < 1/\sigma^2\\
+|x|-0.5/\sigma^2,& \text{otherwise}
+    \end{cases}
+\] 我们图示不同的\(\sigma\)的平滑L1损失和L2损失的区别。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n}{scales} \PY{o}{=} \PY{p}{[}\PY{o}{.}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{]}
+         \PY{n}{x} \PY{o}{=} \PY{n}{nd}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{i}\PY{p}{,}\PY{n}{s} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{scales}\PY{p}{)}\PY{p}{:}
+             \PY{n}{y} \PY{o}{=} \PY{n}{nd}\PY{o}{.}\PY{n}{smooth\PYZus{}l1}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{scalar}\PY{o}{=}\PY{n}{s}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{asnumpy}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{y}\PY{o}{.}\PY{n}{asnumpy}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{colors}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{asnumpy}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{.}\PY{n}{asnumpy}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{colors}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{scales}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scale=}\PY{l+s+s1}{\PYZsq{}}\PY{o}{+}\PY{n+nb}{str}\PY{p}{(}\PY{n}{s}\PY{p}{)} \PY{k}{for} \PY{n}{s} \PY{o+ow}{in} \PY{n}{scales}\PY{p}{]}\PY{o}{+}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Square loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_60_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    我们同样通过继承\texttt{Loss}来定义这个损失。同时它接受一个额外参数\texttt{mask}，这是用来屏蔽掉不需要被惩罚的负例样本。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{k}{class} \PY{n+nc}{SmoothL1Loss}\PY{p}{(}\PY{n}{gluon}\PY{o}{.}\PY{n}{loss}\PY{o}{.}\PY{n}{Loss}\PY{p}{)}\PY{p}{:}
+             \PY{k}{def} \PY{n+nf}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{batch\PYZus{}axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{super}\PY{p}{(}\PY{n}{SmoothL1Loss}\PY{p}{,} \PY{n+nb+bp}{self}\PY{p}{)}\PY{o}{.}\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{k+kc}{None}\PY{p}{,} \PY{n}{batch\PYZus{}axis}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}
+         
+             \PY{k}{def} \PY{n+nf}{hybrid\PYZus{}forward}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{F}\PY{p}{,} \PY{n}{output}\PY{p}{,} \PY{n}{label}\PY{p}{,} \PY{n}{mask}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{loss} \PY{o}{=} \PY{n}{F}\PY{o}{.}\PY{n}{smooth\PYZus{}l1}\PY{p}{(}\PY{p}{(}\PY{n}{output} \PY{o}{\PYZhy{}} \PY{n}{label}\PY{p}{)} \PY{o}{*} \PY{n}{mask}\PY{p}{,} \PY{n}{scalar}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{)}
+                 \PY{k}{return} \PY{n}{loss}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}batch\PYZus{}axis}\PY{p}{,} \PY{n}{exclude}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         
+         \PY{n}{box\PYZus{}loss} \PY{o}{=} \PY{n}{SmoothL1Loss}\PY{p}{(}\PY{p}{)}
+         \PY{n}{box\PYZus{}loss}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}32}]:} SmoothL1Loss(batch\_axis=0, w=None)
+\end{Verbatim}
+            
+    \subsubsection{评估测量}\label{ux8bc4ux4f30ux6d4bux91cf}
+
+对于分类好坏我们可以沿用之前的分类精度。评估边框预测的好坏的一个常用是是平均绝对误差。记得在\href{../chapter_supervised-\%20learning/linear-regression-\%20scratch.md}{线性回归}我们使用了平均平方误差。但跟上面对损失函数的讨论一样，平方误差对于大的误差给予过大的值，从而数值上过于敏感。平均绝对误差就是将二次项替换成绝对值，具体来说就是预测的边框和真实边框在4个维度上的差值的绝对值。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{k+kn}{from} \PY{n+nn}{mxnet} \PY{k}{import} \PY{n}{metric}
+         
+         \PY{n}{cls\PYZus{}metric} \PY{o}{=} \PY{n}{metric}\PY{o}{.}\PY{n}{Accuracy}\PY{p}{(}\PY{p}{)}\PY{c+c1}{\PYZsh{}Computes accuracy classification score.}
+         \PY{n}{box\PYZus{}metric} \PY{o}{=} \PY{n}{metric}\PY{o}{.}\PY{n}{MAE}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{}Computes Mean Absolute Error (MAE) loss.}
+\end{Verbatim}
+
+
+    \subsubsection{初始化模型和训练器}\label{ux521dux59cbux5316ux6a21ux578bux548cux8badux7ec3ux5668}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{k+kn}{from} \PY{n+nn}{mxnet} \PY{k}{import} \PY{n}{init}
+         \PY{k+kn}{from} \PY{n+nn}{mxnet} \PY{k}{import} \PY{n}{cpu}
+         
+         \PY{n}{ctx} \PY{o}{=} \PY{n}{cpu}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} the CUDA implementation requres each image has at least 3 lables. }
+         \PY{c+c1}{\PYZsh{} Padd two \PYZhy{}1 labels for each instance }
+         \PY{n}{train\PYZus{}data}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{label\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+         \PY{n}{train\PYZus{}data} \PY{o}{=} \PY{n}{test\PYZus{}data}\PY{o}{.}\PY{n}{sync\PYZus{}label\PYZus{}shape}\PY{p}{(}\PY{n}{train\PYZus{}data}\PY{p}{)}
+         
+         \PY{n}{net} \PY{o}{=} \PY{n}{ToySSD}\PY{p}{(}\PY{n}{num\PYZus{}class}\PY{p}{)}
+         \PY{n}{filename\PYZus{}3}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{checkpoints\PYZus{}3/ssd\PYZus{}net\PYZus{}3.params}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{net}\PY{o}{.}\PY{n}{load\PYZus{}params}\PY{p}{(}\PY{n}{filename\PYZus{}3}\PY{p}{,} \PY{n}{ctx}\PY{o}{=}\PY{n}{ctx}\PY{p}{)} \PY{c+c1}{\PYZsh{}加载模型参数}
+         \PY{c+c1}{\PYZsh{}net.initialize(init.Xavier(magnitude=2), ctx=ctx)}
+         \PY{n}{trainer} \PY{o}{=} \PY{n}{gluon}\PY{o}{.}\PY{n}{Trainer}\PY{p}{(}\PY{n}{net}\PY{o}{.}\PY{n}{collect\PYZus{}params}\PY{p}{(}\PY{p}{)}\PY{p}{,} 
+                                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sgd}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{learning\PYZus{}rate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{wd}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{5e\PYZhy{}4}\PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{train\PYZus{}data}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{label\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{n}{batch}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}45}]:} 
+         [[ 0.          0.5796468   0.33782753  0.7165603   0.53287745]
+          [-1.         -1.         -1.         -1.         -1.        ]
+          [-1.         -1.         -1.         -1.         -1.        ]]
+         <NDArray 3x5 @cpu(0)>
+\end{Verbatim}
+            
+    train\_data = test\_data.sync\_label\_shape(train\_data)
+这是什么意思？训练数据和测试数据有什么关系呢？返回更新shape的train\_data
+问题：为什么要padding　，因为train\_data的label先padding了，为什么要一致？test是怎么做的？
+sync\_label\_shape(it, verbose=False)
+
+Synchronize label shape with the input iterator. This is useful when
+train/validation iterators have different label padding.
+
+Parameters:
+
+it (ImageDetIter) -- The other iterator to synchronize（同步）
+
+verbose (bool) -- Print verbose log if true
+
+Returns:
+
+The synchronized other iterator, the internal label shape is updated as
+well.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{num\PYZus{}class}\PY{p}{)} \PY{c+c1}{\PYZsh{}在最开始的时候定义的}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{k+kn}{import} \PY{n+nn}{os}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{abspath}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ssd.md}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)} 
+         \PY{n}{os}\PY{o}{.}\PY{n}{makedirs}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{checkpoints\PYZus{}3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{exist\PYZus{}ok}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}filename\PYZus{}3 = \PYZdq{}checkpoints\PYZus{}3/ssd\PYZus{}net\PYZus{}3.params\PYZdq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/home/qy/gluon-tutorials-zh/chapter\_computer-vision/ssd.md
+
+    \end{Verbatim}
+
+    \subsubsection{训练模型}\label{ux8badux7ec3ux6a21ux578b}
+
+训练函数跟前面的不一样在于网络会有多个输出，而且有两个损失函数。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}43}]:} \PY{k+kn}{import} \PY{n+nn}{time}
+         \PY{k+kn}{from} \PY{n+nn}{mxnet} \PY{k}{import} \PY{n}{autograd}
+         \PY{k}{for} \PY{n}{epoch} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} reset data iterators and metrics }
+             \PY{n}{train\PYZus{}data}\PY{o}{.}\PY{n}{reset}\PY{p}{(}\PY{p}{)}
+             \PY{n}{cls\PYZus{}metric}\PY{o}{.}\PY{n}{reset}\PY{p}{(}\PY{p}{)}
+             \PY{n}{box\PYZus{}metric}\PY{o}{.}\PY{n}{reset}\PY{p}{(}\PY{p}{)}
+             \PY{n}{tic} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}
+             \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{batch} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{train\PYZus{}data}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{x} \PY{o}{=} \PY{n}{batch}\PY{o}{.}\PY{n}{data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}in\PYZus{}context}\PY{p}{(}\PY{n}{ctx}\PY{p}{)}
+                 \PY{n}{y} \PY{o}{=} \PY{n}{batch}\PY{o}{.}\PY{n}{label}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}in\PYZus{}context}\PY{p}{(}\PY{n}{ctx}\PY{p}{)}
+                 \PY{k}{with} \PY{n}{autograd}\PY{o}{.}\PY{n}{record}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{anchors}\PY{p}{,} \PY{n}{class\PYZus{}preds}\PY{p}{,} \PY{n}{box\PYZus{}preds} \PY{o}{=} \PY{n}{net}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+                     \PY{n}{box\PYZus{}target}\PY{p}{,} \PY{n}{box\PYZus{}mask}\PY{p}{,} \PY{n}{cls\PYZus{}target} \PY{o}{=} \PY{n}{training\PYZus{}targets}\PY{p}{(}
+                         \PY{n}{anchors}\PY{p}{,} \PY{n}{class\PYZus{}preds}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+                     \PY{k}{if} \PY{n}{i}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{:}
+                         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{class\PYZus{}preds.shape}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{class\PYZus{}preds}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+                         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{class\PYZus{}preds[0][0]:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{class\PYZus{}preds}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+                         \PY{c+c1}{\PYZsh{}print(\PYZsq{}box\PYZus{}preds:\PYZsq{},box\PYZus{}preds[0][0:4])}
+                         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cls\PYZus{}target\PYZus{}shape:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{cls\PYZus{}target}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+                         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{anchors\PYZus{}ture\PYZus{}label:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{cls\PYZus{}target}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1000}\PY{p}{]}\PY{p}{,}\PY{n}{cls\PYZus{}target}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1000}\PY{p}{:}\PY{l+m+mi}{2000}\PY{p}{]}\PY{p}{,}\PY{n}{cls\PYZus{}target}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2000}\PY{p}{:}\PY{l+m+mi}{3000}\PY{p}{]}\PY{p}{,}\PY{n}{cls\PYZus{}target}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{3000}\PY{p}{:}\PY{l+m+mi}{4000}\PY{p}{]}\PY{p}{,}\PY{n}{cls\PYZus{}target}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{4000}\PY{p}{:}\PY{l+m+mi}{5000}\PY{p}{]}\PY{p}{,}\PY{n}{cls\PYZus{}target}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{4000}\PY{p}{:}\PY{l+m+mi}{5444}\PY{p}{]}\PY{p}{)}
+                     \PY{c+c1}{\PYZsh{} losses}
+                     \PY{n}{loss1} \PY{o}{=} \PY{n}{cls\PYZus{}loss}\PY{p}{(}\PY{n}{class\PYZus{}preds}\PY{p}{,} \PY{n}{cls\PYZus{}target}\PY{p}{)}
+                     \PY{n}{loss2} \PY{o}{=} \PY{n}{box\PYZus{}loss}\PY{p}{(}\PY{n}{box\PYZus{}preds}\PY{p}{,} \PY{n}{box\PYZus{}target}\PY{p}{,} \PY{n}{box\PYZus{}mask}\PY{p}{)}
+                     \PY{n}{loss} \PY{o}{=} \PY{n}{loss1} \PY{o}{+} \PY{n}{loss2}
+                 \PY{n}{loss}\PY{o}{.}\PY{n}{backward}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{trainer}\PY{o}{.}\PY{n}{step}\PY{p}{(}\PY{n}{batch\PYZus{}size}\PY{p}{)}
+                 \PY{c+c1}{\PYZsh{} update metrics}
+                 \PY{n}{cls\PYZus{}metric}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{[}\PY{n}{cls\PYZus{}target}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{class\PYZus{}preds}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+                 \PY{n}{box\PYZus{}metric}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{[}\PY{n}{box\PYZus{}target}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{box\PYZus{}preds} \PY{o}{*} \PY{n}{box\PYZus{}mask}\PY{p}{]}\PY{p}{)}
+         
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Epoch }\PY{l+s+si}{\PYZpc{}2d}\PY{l+s+s1}{, train }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{ }\PY{l+s+si}{\PYZpc{}.2f}\PY{l+s+s1}{, }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{ }\PY{l+s+si}{\PYZpc{}.5f}\PY{l+s+s1}{, time }\PY{l+s+si}{\PYZpc{}.1f}\PY{l+s+s1}{ sec}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{p}{(}
+                 \PY{n}{epoch}\PY{p}{,} \PY{o}{*}\PY{n}{cls\PYZus{}metric}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{o}{*}\PY{n}{box\PYZus{}metric}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{time}\PY{o}{.}\PY{n}{time}\PY{p}{(}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{tic}
+             \PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}net.save\PYZus{}params(filename\PYZus{}3)  }
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/home/qy/software/anaconda3/envs/gluon/lib/python3.6/site-packages/mxnet/recordio.py:370: DeprecationWarning: The binary mode of fromstring is deprecated, as it behaves surprisingly on unicode inputs. Use frombuffer instead
+  header = header.\_replace(label=np.fromstring(s, np.float32, header.flag))
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+class\_preds.shape (32, 5444, 2)
+class\_preds[0][0]: 
+[ 1.4724693 -1.2993326]
+<NDArray 2 @cpu(0)>
+cls\_target\_shape: (32, 5444)
+anchors\_ture\_label: 
+[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+<NDArray 1000 @cpu(0)> 
+[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+<NDArray 1000 @cpu(0)> 
+[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1.
+ 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 1. 0. 0. 0. 1. 0. 0. 1. 1. 0. 0. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 1. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+<NDArray 1000 @cpu(0)> 
+[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+<NDArray 1000 @cpu(0)> 
+[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+<NDArray 1000 @cpu(0)> 
+[0. 0. 0. {\ldots} 0. 0. 0.]
+<NDArray 1444 @cpu(0)>
+Epoch  0, train accuracy 0.97, mae 0.00191, time 245.2 sec
+
+    \end{Verbatim}
+
+    \subsection{预测}\label{ux9884ux6d4b}
+
+在预测阶段，我们希望能把图片里面所有感兴趣的物体找出来。
+
+我们先定一个数据读取和预处理函数。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} \PY{k}{def} \PY{n+nf}{process\PYZus{}image}\PY{p}{(}\PY{n}{fname}\PY{p}{)}\PY{p}{:}
+             \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{fname}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+                 \PY{n}{im} \PY{o}{=} \PY{n}{image}\PY{o}{.}\PY{n}{imdecode}\PY{p}{(}\PY{n}{f}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{c+c1}{\PYZsh{}Decode（解码） an image to an NDArray.}
+             \PY{c+c1}{\PYZsh{} resize to data\PYZus{}shape}
+             \PY{n}{data} \PY{o}{=} \PY{n}{image}\PY{o}{.}\PY{n}{imresize}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{data\PYZus{}shape}\PY{p}{,} \PY{n}{data\PYZus{}shape}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} minus rgb mean}
+             \PY{n}{data} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{float32}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{rgb\PYZus{}mean}
+             \PY{c+c1}{\PYZsh{} convert to batch x channel x height xwidth）}
+             \PY{k}{return} \PY{n}{data}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{expand\PYZus{}dims}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{im}
+\end{Verbatim}
+
+
+    batch x channel x height xwidth数据类型可以用（０，１，３，４）表示
+不经过data.transpose　处理的图片是（２５６，２５６，３）的格式
+经过处理后的图片格式是（１，３，２５６，２５６）
+
+params = net.collect\_params()
+然后我们跟训练那样预测表框和其对应的物体。但注意到因为我们对每个像素都会生成数个锚框，这样我们可能会预测出大量相似的表框，从而导致结果非常嘈杂。一个办法是对于IoU比较高的两个表框，我们只保留预测执行度比较高的那个。这个算法（称之为non
+maximum
+suppression）在\texttt{MultiBoxDetection}里实现了。下面我们实现预测函数：
+
+\subsubsection{}\label{section}
+
+来自网上的注释　针对predict（ｘ)
+
+转换为可读的输出 Convert predictions to real object detection results
+要把网络输出转换成我们需要的坐标，还要最后一步，比如我们需要softmax把分类预测转换成概率，还需要把偏移量和预设框结合来得到物体的大小和位置。
+非极大抑制（Non-Maximum
+Suppression）也是必要的一步，因为一个物体往往有不只一个检测框。
+
+跑一下softmax， 转成0-1的概率 cls\_probs =
+nd.SoftmaxActivation(nd.transpose(cls\_preds, (0, 2, 1)),
+mode='channel')
+
+如下所示：
+
+{[}{[}{[}0.92849267 0.97041637 0.8942195 ... 0.49475107 0.49204502
+0.46974695{]}
+
+{[}0.07150732 0.02958368 0.10578047 ... 0.5052489 0.507955
+0.53025305{]}{]}{]} \textless{} NDArray 1x2x5444 @cpu(0)\textgreater{}
+把偏移量加到预设框上，去掉得分很低的，跑一遍nms，得到最终的结果
+
+output = MultiBoxDetection(*{[}cls\_probs, box\_preds, anchors{]},
+force\_suppress=True, clip=False)
+
+print(output)
+
+{[}{[}{[} 0. 0.61178613 0.51807499 0.5042429 0.67325425 0.70118797{]}
+
+{[}-1. 0.59466797 0.52491206 0.50917625 0.66228026 0.70489514{]}
+
+{[}-1. 0.5731774 0.53843218 0.50217044 0.66522425 0.7118448 {]}
+
+...,
+
+{[}-1. -1. -1. -1. -1. -1. {]}
+
+{[}-1. -1. -1. -1. -1. -1. {]}
+
+{[}-1. -1. -1. -1. -1. -1. {]}{]}{]}
+
+NDArray 1x5444x6 @gpu(0)\textgreater{}
+结果中，每一行都是一个可能的结果框，表示为{[}类别id， 得分，
+左边界，上边界，右边界，下边界{]}，有很多-1的原因是网络预测到这些都是背景，或者作为被抑制的结果。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} \PY{k+kn}{from} \PY{n+nn}{mxnet}\PY{n+nn}{.}\PY{n+nn}{contrib}\PY{n+nn}{.}\PY{n+nn}{ndarray} \PY{k}{import} \PY{n}{MultiBoxDetection}
+         
+         \PY{k}{def} \PY{n+nf}{predict}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+             \PY{n}{anchors}\PY{p}{,} \PY{n}{cls\PYZus{}preds}\PY{p}{,} \PY{n}{box\PYZus{}preds} \PY{o}{=} \PY{n}{net}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{as\PYZus{}in\PYZus{}context}\PY{p}{(}\PY{n}{ctx}\PY{p}{)}\PY{p}{)}\PY{c+c1}{\PYZsh{}模型预测主体}
+             \PY{n}{cls\PYZus{}probs} \PY{o}{=} \PY{n}{nd}\PY{o}{.}\PY{n}{SoftmaxActivation}\PY{p}{(}
+                 \PY{n}{cls\PYZus{}preds}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{mode}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{channel}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{k}{return} \PY{n}{MultiBoxDetection}\PY{p}{(}\PY{n}{cls\PYZus{}probs}\PY{p}{,} \PY{n}{box\PYZus{}preds}\PY{p}{,} \PY{n}{anchors}\PY{p}{,}
+                                      \PY{n}{force\PYZus{}suppress}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{clip}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+    预测函数会输出所有边框，每个边框由\texttt{{[}class\_id,\ confidence,\ xmin,\ ymin,\ xmax,\ ymax{]}}表示。其中\texttt{class\_id=-1}表示要么这个边框被预测只含有背景，或者被去重掉了。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}48}]:} \PY{n}{x}\PY{p}{,} \PY{n}{im} \PY{o}{=} \PY{n}{process\PYZus{}image}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{../img/pikachu.jpg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{out} \PY{o}{=} \PY{n}{predict}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+         \PY{n}{out}\PY{o}{.}\PY{n}{shape}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{out}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{30}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+[[ 0.          0.6946409   0.5180169   0.4914825   0.6655695   0.7121016 ]
+ [ 0.          0.59874904  0.7345242   0.522274    0.892883    0.6984476 ]
+ [ 0.          0.5560829   0.6975304   0.10924969  0.8320161   0.30895373]
+ [-1.          0.54995763  0.5262735   0.50214475  0.6585114   0.6903619 ]
+ [-1.          0.5475861   0.52494246  0.50798684  0.67352325  0.72695047]
+ [-1.          0.54530257  0.51092196  0.49778497  0.66434085  0.7168367 ]
+ [ 0.          0.53692234  0.21047556  0.5646262   0.35480684  0.7510005 ]
+ [-1.          0.5347149   0.20628706  0.57148576  0.364526    0.75700605]
+ [ 0.          0.5083551   0.5174158   0.34289876  0.67879087  0.52875566]
+ [-1.          0.50632757  0.21338944  0.5713067   0.35789645  0.7626529 ]
+ [-1.          0.5034665   0.5161381   0.35949007  0.6710595   0.5278239 ]
+ [-1.          0.49765173  0.21187672  0.56433403  0.35252574  0.7562325 ]
+ [-1.          0.48465735  0.53331494  0.5325618   0.7021643   0.7382822 ]
+ [-1.          0.47479326  0.5228767   0.49561     0.67611426  0.7135874 ]
+ [-1.          0.45209852  0.21014473  0.5575404   0.3424261   0.77017844]
+ [-1.          0.434182    0.53464735  0.33513114  0.68460464  0.5335287 ]
+ [ 0.          0.43323243  0.36720854  0.5238579   0.48004037  0.71382433]
+ [-1.          0.42748314  0.5210672   0.5171689   0.6759406   0.7018844 ]
+ [-1.          0.42463842  0.6916762   0.10713778  0.8223453   0.2890772 ]
+ [-1.          0.4128902   0.7307615   0.52935314  0.8977978   0.7146814 ]
+ [-1.          0.4120826   0.7385038   0.5285439   0.886238    0.71979433]
+ [-1.          0.41092345  0.6681098   0.11566651  0.82437146  0.30035424]
+ [-1.          0.4009873   0.7491404   0.5331657   0.89371395  0.7215264 ]
+ [-1.          0.39538255  0.5124041   0.52397656  0.6647252   0.7126794 ]
+ [-1.          0.38736188  0.20978622  0.557594    0.35600972  0.76783246]
+ [-1.          0.3816112   0.21383804  0.5489476   0.34035575  0.74197733]
+ [-1.          0.37328884  0.52123785  0.31843033  0.6487708   0.5327414 ]
+ [-1.          0.37278822  0.70461     0.12498004  0.82620835  0.2982716 ]
+ [-1.          0.36883458  0.5101772   0.32412016  0.70751756  0.53375274]
+ [-1.          0.36772385  0.67750907  0.07431751  0.82337964  0.30512303]]
+<NDArray 30x6 @cpu(0)>
+
+    \end{Verbatim}
+
+    最后我们将预测出置信度超过某个阈值的边框画出来：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} \PY{n}{mpl}\PY{o}{.}\PY{n}{rcParams}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{figure.figsize}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{6}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{display}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{out}\PY{p}{,} \PY{n}{threshold}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{p}{:}    
+             \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{im}\PY{o}{.}\PY{n}{asnumpy}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+             \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{out}\PY{p}{:}
+                 \PY{n}{row} \PY{o}{=} \PY{n}{row}\PY{o}{.}\PY{n}{asnumpy}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{class\PYZus{}id}\PY{p}{,} \PY{n}{score} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{row}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{row}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                 \PY{k}{if} \PY{n}{class\PYZus{}id} \PY{o}{\PYZlt{}} \PY{l+m+mi}{0} \PY{o+ow}{or} \PY{n}{score} \PY{o}{\PYZlt{}} \PY{n}{threshold}\PY{p}{:}
+                     \PY{k}{continue}
+                 \PY{n}{color} \PY{o}{=} \PY{n}{colors}\PY{p}{[}\PY{n}{class\PYZus{}id}\PY{o}{\PYZpc{}}\PY{k}{len}(colors)]
+                 \PY{n}{box} \PY{o}{=} \PY{n}{row}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{:}\PY{l+m+mi}{6}\PY{p}{]} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{im}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{im}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+                 
+                 \PY{c+c1}{\PYZsh{}测试row[2:6] * np.array([im.shape[0],im.shape[1]]*2)　中*2的含义}
+                 \PY{c+c1}{\PYZsh{}test\PYZus{}2=np.array([im.shape[0],im.shape[1]]*2)}
+                 \PY{c+c1}{\PYZsh{}print(test\PYZus{}2)}
+                 
+                 \PY{n}{rect} \PY{o}{=} \PY{n}{box\PYZus{}to\PYZus{}rect}\PY{p}{(}\PY{n}{nd}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{box}\PY{p}{)}\PY{p}{,} \PY{n}{color}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{add\PYZus{}patch}\PY{p}{(}\PY{n}{rect}\PY{p}{)}
+                                 
+                 \PY{n}{text} \PY{o}{=} \PY{n}{class\PYZus{}names}\PY{p}{[}\PY{n}{class\PYZus{}id}\PY{p}{]} 
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{text}\PY{p}{(}\PY{n}{box}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{box}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} 
+                                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}:s\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+si}{\PYZob{}:.2f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{text}\PY{p}{,} \PY{n}{score}\PY{p}{)}\PY{p}{,}
+                                \PY{n}{bbox}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{n}{color}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{p}{,}
+                                \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{white}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{display}\PY{p}{(}\PY{n}{im}\PY{p}{,} \PY{n}{out}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{threshold}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_81_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    测试row{[}2:6{]} *
+np.array({[}im.shape{[}0{]},im.shape{[}1{]}{]}\emph{2)　中}2的含义
+含义是：将二维转换为４维度
+
+\subsection{结论}\label{ux7ed3ux8bba}
+
+物体检测比分类要困难很多。因为我们不仅要预测物体类别，还要找到它们的位置。这一章我们展示我们还是可以在合理篇幅里实现SSD算法。
+
+\subsection{练习}\label{ux7ec3ux4e60}
+
+我们有很多细节并没有展开讨论。例如
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  锚框的大小和长宽比是如何选取的
+\item
+  \texttt{MultiBoxTarget}里我们没有采样负例
+\item
+  分类和回归损失我们直接加起来了，并没有给予权重
+\item
+  在展示的时候如何选取阈值\texttt{threshold}
+  \textbf{吐槽和讨论欢迎点}\href{https://discuss.gluon.ai/t/topic/2511}{这里}
+\end{enumerate}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
