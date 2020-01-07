@@ -15,21 +15,26 @@ from mxnet import ndarray as nd
 
 然后我们创建一个3行和4列的2D数组（通常也叫**矩阵**），并且把每个元素初始化成0
 
-```{.python .input  n=3}
+```{.python .input  n=2}
 nd.zeros((3, 4))
 ```
 
-```{.json .output n=3}
+```{.json .output n=2}
 [
  {
   "data": {
-   "text/plain": "\n[[ 0.  0.  0.  0.]\n [ 0.  0.  0.  0.]\n [ 0.  0.  0.  0.]]\n<NDArray 3x4 @cpu(0)>"
+   "text/plain": "\n[[0. 0. 0. 0.]\n [0. 0. 0. 0.]\n [0. 0. 0. 0.]]\n<NDArray 3x4 @cpu(0)>"
   },
-  "execution_count": 3,
+  "execution_count": 2,
   "metadata": {},
   "output_type": "execute_result"
  }
 ]
+```
+
+```{.python .input}
+for　i in 　
+ print(nd[i])
 ```
 
 类似的，我们可以创建数组每个元素被初始化成1。
@@ -81,14 +86,14 @@ print(id(list3[0]))
 
 或者从python的数组直接构造
 
-```{.python .input  n=2}
+```{.python .input  n=3}
 F=nd.array([[1,2],[2,3]])
 print(F)
 print(nd.mean(F))
 nd.mean(F).asscalar()
 ```
 
-```{.json .output n=2}
+```{.json .output n=3}
 [
  {
   "name": "stdout",
@@ -99,9 +104,25 @@ nd.mean(F).asscalar()
   "data": {
    "text/plain": "2.0"
   },
-  "execution_count": 2,
+  "execution_count": 3,
   "metadata": {},
   "output_type": "execute_result"
+ }
+]
+```
+
+```{.python .input  n=18}
+print(F.flip)
+for i in  F.flatten():
+    print(i)
+```
+
+```{.json .output n=18}
+[
+ {
+  "name": "stdout",
+  "output_type": "stream",
+  "text": "<bound method NDArray.flip of \n[[1. 2.]\n [2. 3.]]\n<NDArray 2x2 @cpu(0)>>\n\n[1. 2.]\n<NDArray 2 @cpu(0)>\n\n[2. 3.]\n<NDArray 2 @cpu(0)>\n"
  }
 ]
 ```
@@ -531,3 +552,152 @@ x
 ndarray模块提供一系列多维数组操作函数。所有函数列表可以参见[NDArray
 API文档](https://mxnet.incubator.apache.org/api/python/ndarray.html)。
 **吐槽和讨论欢迎点**[这里](https://discuss.gluon.ai/t/topic/745)
+
+# add about reshape and transpose
+reshape:
+
+```{.python .input  n=47}
+x1=nd.array([[1,2,3],
+         [4,5,6],
+         [7,8,9]])
+```
+
+```{.python .input  n=48}
+x1.reshape(-1,3)
+```
+
+```{.json .output n=48}
+[
+ {
+  "data": {
+   "text/plain": "\n[[1. 2. 3.]\n [4. 5. 6.]\n [7. 8. 9.]]\n<NDArray 3x3 @cpu(0)>"
+  },
+  "execution_count": 48,
+  "metadata": {},
+  "output_type": "execute_result"
+ }
+]
+```
+
+```{.python .input  n=49}
+x1.transpose((1,0))
+```
+
+```{.json .output n=49}
+[
+ {
+  "data": {
+   "text/plain": "\n[[1. 4. 7.]\n [2. 5. 8.]\n [3. 6. 9.]]\n<NDArray 3x3 @cpu(0)>"
+  },
+  "execution_count": 49,
+  "metadata": {},
+  "output_type": "execute_result"
+ }
+]
+```
+
+```{.python .input  n=50}
+x1[0]
+```
+
+```{.json .output n=50}
+[
+ {
+  "data": {
+   "text/plain": "\n[1. 2. 3.]\n<NDArray 3 @cpu(0)>"
+  },
+  "execution_count": 50,
+  "metadata": {},
+  "output_type": "execute_result"
+ }
+]
+```
+
+```{.python .input  n=51}
+x2=nd.arange(3*2*3*4).reshape((3,2,3,4))
+```
+
+```{.python .input  n=52}
+x2
+```
+
+```{.json .output n=52}
+[
+ {
+  "data": {
+   "text/plain": "\n[[[[ 0.  1.  2.  3.]\n   [ 4.  5.  6.  7.]\n   [ 8.  9. 10. 11.]]\n\n  [[12. 13. 14. 15.]\n   [16. 17. 18. 19.]\n   [20. 21. 22. 23.]]]\n\n\n [[[24. 25. 26. 27.]\n   [28. 29. 30. 31.]\n   [32. 33. 34. 35.]]\n\n  [[36. 37. 38. 39.]\n   [40. 41. 42. 43.]\n   [44. 45. 46. 47.]]]\n\n\n [[[48. 49. 50. 51.]\n   [52. 53. 54. 55.]\n   [56. 57. 58. 59.]]\n\n  [[60. 61. 62. 63.]\n   [64. 65. 66. 67.]\n   [68. 69. 70. 71.]]]]\n<NDArray 3x2x3x4 @cpu(0)>"
+  },
+  "execution_count": 52,
+  "metadata": {},
+  "output_type": "execute_result"
+ }
+]
+```
+
+```{.python .input  n=57}
+x2.reshape((-1,4))
+```
+
+```{.json .output n=57}
+[
+ {
+  "data": {
+   "text/plain": "\n[[ 0.  1.  2.  3.]\n [ 4.  5.  6.  7.]\n [ 8.  9. 10. 11.]\n [12. 13. 14. 15.]\n [16. 17. 18. 19.]\n [20. 21. 22. 23.]\n [24. 25. 26. 27.]\n [28. 29. 30. 31.]\n [32. 33. 34. 35.]\n [36. 37. 38. 39.]\n [40. 41. 42. 43.]\n [44. 45. 46. 47.]\n [48. 49. 50. 51.]\n [52. 53. 54. 55.]\n [56. 57. 58. 59.]\n [60. 61. 62. 63.]\n [64. 65. 66. 67.]\n [68. 69. 70. 71.]]\n<NDArray 18x4 @cpu(0)>"
+  },
+  "execution_count": 57,
+  "metadata": {},
+  "output_type": "execute_result"
+ }
+]
+```
+
+```{.python .input  n=53}
+x2.transpose((0,3,1,2))
+```
+
+```{.json .output n=53}
+[
+ {
+  "data": {
+   "text/plain": "\n[[[[ 0.  4.  8.]\n   [12. 16. 20.]]\n\n  [[ 1.  5.  9.]\n   [13. 17. 21.]]\n\n  [[ 2.  6. 10.]\n   [14. 18. 22.]]\n\n  [[ 3.  7. 11.]\n   [15. 19. 23.]]]\n\n\n [[[24. 28. 32.]\n   [36. 40. 44.]]\n\n  [[25. 29. 33.]\n   [37. 41. 45.]]\n\n  [[26. 30. 34.]\n   [38. 42. 46.]]\n\n  [[27. 31. 35.]\n   [39. 43. 47.]]]\n\n\n [[[48. 52. 56.]\n   [60. 64. 68.]]\n\n  [[49. 53. 57.]\n   [61. 65. 69.]]\n\n  [[50. 54. 58.]\n   [62. 66. 70.]]\n\n  [[51. 55. 59.]\n   [63. 67. 71.]]]]\n<NDArray 3x4x2x3 @cpu(0)>"
+  },
+  "execution_count": 53,
+  "metadata": {},
+  "output_type": "execute_result"
+ }
+]
+```
+
+```{.python .input  n=54}
+x2.transpose((0,1,3,2))
+```
+
+```{.json .output n=54}
+[
+ {
+  "data": {
+   "text/plain": "\n[[[[ 0.  4.  8.]\n   [ 1.  5.  9.]\n   [ 2.  6. 10.]\n   [ 3.  7. 11.]]\n\n  [[12. 16. 20.]\n   [13. 17. 21.]\n   [14. 18. 22.]\n   [15. 19. 23.]]]\n\n\n [[[24. 28. 32.]\n   [25. 29. 33.]\n   [26. 30. 34.]\n   [27. 31. 35.]]\n\n  [[36. 40. 44.]\n   [37. 41. 45.]\n   [38. 42. 46.]\n   [39. 43. 47.]]]\n\n\n [[[48. 52. 56.]\n   [49. 53. 57.]\n   [50. 54. 58.]\n   [51. 55. 59.]]\n\n  [[60. 64. 68.]\n   [61. 65. 69.]\n   [62. 66. 70.]\n   [63. 67. 71.]]]]\n<NDArray 3x2x4x3 @cpu(0)>"
+  },
+  "execution_count": 54,
+  "metadata": {},
+  "output_type": "execute_result"
+ }
+]
+```
+
+```{.python .input  n=55}
+3*5*5
+```
+
+```{.json .output n=55}
+[
+ {
+  "data": {
+   "text/plain": "75"
+  },
+  "execution_count": 55,
+  "metadata": {},
+  "output_type": "execute_result"
+ }
+]
+```

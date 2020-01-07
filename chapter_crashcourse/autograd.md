@@ -27,7 +27,7 @@ x
 [
  {
   "data": {
-   "text/plain": "\n[[ 1.  2.]\n [ 3.  4.]]\n<NDArray 2x2 @cpu(0)>"
+   "text/plain": "\n[[1. 2.]\n [3. 4.]]\n<NDArray 2x2 @cpu(0)>"
   },
   "execution_count": 3,
   "metadata": {},
@@ -38,92 +38,95 @@ x
 
 当进行求导的时候，我们需要一个地方来存`x`的导数，这个可以通过NDArray的方法`attach_grad()`来要求系统申请对应的空间。
 
-```{.python .input  n=4}
+```{.python .input  n=8}
 x.attach_grad()
 ```
 
 下面定义`f`。默认条件下，MXNet不会自动记录和构建用于求导的计算图，我们需要使用autograd里的`record()`函数来显式的要求MXNet记录我们需要求导的程序。
 
-```{.python .input  n=10}
+```{.python .input  n=12}
 with ag.record():
     y = x * 2
-    z = y * x
+    z = y*x
     z1=nd.sum(z)
 ```
 
-```{.python .input  n=18}
-#print(z)
-z
-#print(nd.sum(z))
+```{.python .input  n=36}
+x2 = nd.array([[1, 1], [3, 5],[4, 5]])
+x3 = nd.array([[1, 3,4], [1,3, 5]])
+print(x3)
+print(x2)
+x2.attach_grad()
+x3.attach_grad()
 ```
 
-```{.json .output n=18}
-[
- {
-  "data": {
-   "text/plain": "\n[[  2.   8.]\n [ 18.  32.]]\n<NDArray 2x2 @cpu(0)>"
-  },
-  "execution_count": 18,
-  "metadata": {},
-  "output_type": "execute_result"
- }
-]
-```
-
-接下来我们可以通过`z.backward()`来进行求导。如果`z`不是一个标量，那么`z.backward()`等价于`nd.sum(z).backward()`.
-
-```{.python .input  n=12}
-print(z1)
-#z.backward()
-z1.backward()
-```
-
-```{.json .output n=12}
+```{.json .output n=36}
 [
  {
   "name": "stdout",
   "output_type": "stream",
-  "text": "\n[ 60.]\n<NDArray 1 @cpu(0)>\n"
+  "text": "\n[[1. 3. 4.]\n [1. 3. 5.]]\n<NDArray 2x3 @cpu(0)>\n\n[[1. 1.]\n [3. 5.]\n [4. 5.]]\n<NDArray 3x2 @cpu(0)>\n"
  }
 ]
 ```
 
-```{.python .input  n=15}
-x.grad
+```{.python .input  n=43}
+with ag.record():
+    y=nd.dot(x2,x3)
+    #z1=nd.sum(y)
 ```
 
-```{.json .output n=15}
+接下来我们可以通过`z.backward()`来进行求导。如果`z`不是一个标量，那么`z.backward()`等价于`nd.sum(z).backward()`.
+
+```{.python .input  n=44}
+print(z1)
+#z.backward()
+y.backward()
+```
+
+```{.json .output n=44}
 [
  {
-  "data": {
-   "text/plain": "\n[[  4.   8.]\n [ 12.  16.]]\n<NDArray 2x2 @cpu(0)>"
-  },
-  "execution_count": 15,
-  "metadata": {},
-  "output_type": "execute_result"
+  "name": "stdout",
+  "output_type": "stream",
+  "text": "\n[163.]\n<NDArray 1 @cpu(0)>\n"
+ }
+]
+```
+
+```{.python .input  n=46}
+print(x3.grad)
+```
+
+```{.json .output n=46}
+[
+ {
+  "name": "stdout",
+  "output_type": "stream",
+  "text": "\n[[ 8.  8.  8.]\n [11. 11. 11.]]\n<NDArray 2x3 @cpu(0)>\n"
  }
 ]
 ```
 
 现在我们来看求出来的导数是不是正确的。注意到`y = x * 2`和`z = x * y`，所以`z`等价于`2 * x * x`。它的导数那么就是 $\frac{dz}{dx} = 4 \times {x}$ 。
 
-```{.python .input  n=16}
+```{.python .input  n=19}
 print('x.grad: ', x.grad)
-x.grad == 4*x
+x.grad == 4*x#是否等于　逻辑比较
 ```
 
-```{.json .output n=16}
+```{.json .output n=19}
 [
  {
   "name": "stdout",
   "output_type": "stream",
-  "text": "x.grad:  \n[[  4.   8.]\n [ 12.  16.]]\n<NDArray 2x2 @cpu(0)>\n"
+  "text": "x.grad:  \n[[ 4.  8.]\n [12. 16.]]\n<NDArray 2x2 @cpu(0)>\n"
  },
  {
   "data": {
-   "text/plain": "\n[[ 1.  1.]\n [ 1.  1.]]\n<NDArray 2x2 @cpu(0)>"
+   "text/plain": "\n[[1. 1.]\n [1. 1.]]\n<NDArray 2x2 @cpu(0)>"
   },
-  "execution_count": 16,
+  "execution_count": 19,
   "metadata": {},
   "output_type": "execute_result"
  }
@@ -134,7 +137,7 @@ x.grad == 4*x
 
 命令式的编程的一个便利之处是几乎可以对任意的可导程序进行求导，即使里面包含了Python的控制流。考虑下面程序，里面包含控制流`for`和`if`，但循环迭代的次数和判断语句的执行都是取决于输入的值。不同的输入会导致这个程序的执行不一样。（对于计算图框架来说，这个对应于动态图，就是图的结构会根据输入数据不同而改变）。
 
-```{.python .input  n=19}
+```{.python .input  n=23}
 def f(a):
     b = a * 2
     while nd.norm(b).asscalar() < 1000:
@@ -148,7 +151,7 @@ def f(a):
 
 我们可以跟之前一样使用`record`记录和`backward`求导。
 
-```{.python .input  n=22}
+```{.python .input  n=24}
 a = nd.random_normal(shape=3)
 print(a)
 a.attach_grad()
@@ -158,27 +161,27 @@ c.backward()
 print(c)
 ```
 
-```{.json .output n=22}
+```{.json .output n=24}
 [
  {
   "name": "stdout",
   "output_type": "stream",
-  "text": "\n[ 1.18392551  1.89171135 -1.23474145]\n<NDArray 3 @cpu(0)>\n\n[ 606.16986084  968.55621338 -632.18762207]\n<NDArray 3 @cpu(0)>\n"
+  "text": "\n[ 1.1839255  1.8917114 -1.2347414]\n<NDArray 3 @cpu(0)>\n\n[ 606.16986  968.5562  -632.1876 ]\n<NDArray 3 @cpu(0)>\n"
  }
 ]
 ```
 
-```{.python .input  n=23}
+```{.python .input  n=25}
 a.grad
 ```
 
-```{.json .output n=23}
+```{.json .output n=25}
 [
  {
   "data": {
-   "text/plain": "\n[ 512.  512.  512.]\n<NDArray 3 @cpu(0)>"
+   "text/plain": "\n[512. 512. 512.]\n<NDArray 3 @cpu(0)>"
   },
-  "execution_count": 23,
+  "execution_count": 25,
   "metadata": {},
   "output_type": "execute_result"
  }

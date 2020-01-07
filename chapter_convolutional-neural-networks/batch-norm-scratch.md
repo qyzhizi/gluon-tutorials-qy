@@ -32,7 +32,7 @@ $$y_i \leftarrow \gamma \hat{x_i} + \beta \equiv \mbox{BN}_{\gamma,\beta}(x_i)$$
 我们现在来动手实现一个简化的批量归一化层。实现时对全连接层和二维卷积层两种情况做了区分。对于全连接层，很明显我们要对每个批量进行归一化。然而这里需要注意的是，对
 于二维卷积，我们要对每个通道进行归一化，并需要保持四维形状使得可以正确地广播。
 
-```{.python .input  n=34}
+```{.python .input  n=7}
 from mxnet import nd
 def pure_batch_norm(X, gamma, beta, eps=1e-5):
     assert len(X.shape) in (2, 4)
@@ -47,32 +47,18 @@ def pure_batch_norm(X, gamma, beta, eps=1e-5):
     else:
         # 对每个通道算均值和方差，需要保持4D形状使得可以正确地广播
         mean = X.mean(axis=(0,2,3), keepdims=True)
-        #print(mean)
+        print(mean)
         variance = ((X - mean)**2).mean(axis=(0,2,3), keepdims=True)
-        #print(variance)
+        print(variance)
     # 均一化
     X_hat = (X - mean) / nd.sqrt(variance + eps)
     # 拉升和偏移
     return gamma.reshape(mean.shape) * X_hat + beta.reshape(mean.shape)
 ```
 
-```{.python .input  n=2}
-mean??
-```
-
-```{.json .output n=2}
-[
- {
-  "name": "stdout",
-  "output_type": "stream",
-  "text": "Object `mean` not found.\n"
- }
-]
-```
-
 下面我们检查一下。我们先定义全连接层的输入是这样的。`每一行是批量中的一个实例`。
 
-```{.python .input  n=29}
+```{.python .input  n=3}
 A = nd.arange(6).reshape((3,2))
 mean2 = A.mean(axis=1,keepdims=True) #加上keepdims=True 保证缩减后列的维数是1，保证广播的正确 ，否者将变成一维的行向量
 print(mean2)                        #axis=0,表示行的方向压缩（1*x），axis=1,表示列的方向压缩（x*1）
@@ -80,18 +66,18 @@ print(A)
 mean2+A #使用了广播
 ```
 
-```{.json .output n=29}
+```{.json .output n=3}
 [
  {
   "name": "stdout",
   "output_type": "stream",
-  "text": "\n[[ 0.5]\n [ 2.5]\n [ 4.5]]\n<NDArray 3x1 @cpu(0)>\n\n[[ 0.  1.]\n [ 2.  3.]\n [ 4.  5.]]\n<NDArray 3x2 @cpu(0)>\n"
+  "text": "\n[[0.5]\n [2.5]\n [4.5]]\n<NDArray 3x1 @cpu(0)>\n\n[[0. 1.]\n [2. 3.]\n [4. 5.]]\n<NDArray 3x2 @cpu(0)>\n"
  },
  {
   "data": {
-   "text/plain": "\n[[ 0.5  1.5]\n [ 4.5  5.5]\n [ 8.5  9.5]]\n<NDArray 3x2 @cpu(0)>"
+   "text/plain": "\n[[0.5 1.5]\n [4.5 5.5]\n [8.5 9.5]]\n<NDArray 3x2 @cpu(0)>"
   },
-  "execution_count": 29,
+  "execution_count": 3,
   "metadata": {},
   "output_type": "execute_result"
  }
@@ -100,17 +86,17 @@ mean2+A #使用了广播
 
 我们希望批量中的`每一列都被归一化`。结果符合预期。
 
-```{.python .input  n=31}
+```{.python .input  n=4}
 pure_batch_norm(A, gamma=nd.array([1,1]), beta=nd.array([0,0]))
 ```
 
-```{.json .output n=31}
+```{.json .output n=4}
 [
  {
   "data": {
-   "text/plain": "\n[[-1.22474265 -1.22474265]\n [ 0.          0.        ]\n [ 1.22474265  1.22474265]]\n<NDArray 3x2 @cpu(0)>"
+   "text/plain": "\n[[-1.2247427 -1.2247427]\n [ 0.         0.       ]\n [ 1.2247427  1.2247427]]\n<NDArray 3x2 @cpu(0)>"
   },
-  "execution_count": 31,
+  "execution_count": 4,
   "metadata": {},
   "output_type": "execute_result"
  }
@@ -119,18 +105,18 @@ pure_batch_norm(A, gamma=nd.array([1,1]), beta=nd.array([0,0]))
 
 下面我们定义二维卷积网络层的输入是这样的。
 
-```{.python .input  n=32}
+```{.python .input  n=5}
 B = nd.arange(18).reshape((1,2,3,3))
 B
 ```
 
-```{.json .output n=32}
+```{.json .output n=5}
 [
  {
   "data": {
-   "text/plain": "\n[[[[  0.   1.   2.]\n   [  3.   4.   5.]\n   [  6.   7.   8.]]\n\n  [[  9.  10.  11.]\n   [ 12.  13.  14.]\n   [ 15.  16.  17.]]]]\n<NDArray 1x2x3x3 @cpu(0)>"
+   "text/plain": "\n[[[[ 0.  1.  2.]\n   [ 3.  4.  5.]\n   [ 6.  7.  8.]]\n\n  [[ 9. 10. 11.]\n   [12. 13. 14.]\n   [15. 16. 17.]]]]\n<NDArray 1x2x3x3 @cpu(0)>"
   },
-  "execution_count": 32,
+  "execution_count": 5,
   "metadata": {},
   "output_type": "execute_result"
  }
@@ -139,22 +125,22 @@ B
 
 结果也如预期那样，我们对每个通道做了归一化。
 
-```{.python .input  n=33}
+```{.python .input  n=8}
 pure_batch_norm(B, gamma=nd.array([1,1]), beta=nd.array([0,0]))
 ```
 
-```{.json .output n=33}
+```{.json .output n=8}
 [
  {
   "name": "stdout",
   "output_type": "stream",
-  "text": "\n[[[[  4.]]\n\n  [[ 13.]]]]\n<NDArray 1x2x1x1 @cpu(0)>\n\n[[[[ 6.66666651]]\n\n  [[ 6.66666651]]]]\n<NDArray 1x2x1x1 @cpu(0)>\n"
+  "text": "\n[[[[ 4.]]\n\n  [[13.]]]]\n<NDArray 1x2x1x1 @cpu(0)>\n\n[[[[6.6666665]]\n\n  [[6.6666665]]]]\n<NDArray 1x2x1x1 @cpu(0)>\n"
  },
  {
   "data": {
-   "text/plain": "\n[[[[-1.54919219 -1.1618942  -0.7745961 ]\n   [-0.38729805  0.          0.38729805]\n   [ 0.7745961   1.1618942   1.54919219]]\n\n  [[-1.54919219 -1.1618942  -0.7745961 ]\n   [-0.38729805  0.          0.38729805]\n   [ 0.7745961   1.1618942   1.54919219]]]]\n<NDArray 1x2x3x3 @cpu(0)>"
+   "text/plain": "\n[[[[-1.5491922  -1.1618942  -0.7745961 ]\n   [-0.38729805  0.          0.38729805]\n   [ 0.7745961   1.1618942   1.5491922 ]]\n\n  [[-1.5491922  -1.1618942  -0.7745961 ]\n   [-0.38729805  0.          0.38729805]\n   [ 0.7745961   1.1618942   1.5491922 ]]]]\n<NDArray 1x2x3x3 @cpu(0)>"
   },
-  "execution_count": 33,
+  "execution_count": 8,
   "metadata": {},
   "output_type": "execute_result"
  }
